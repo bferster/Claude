@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Claude API testbed</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/themes/smoothness/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"></script>
+	</head>
+	<style>
+		 body { 			font-family:SegoeUI,Verdana,Geneva,sans-serif; font-size:14px; box-sizing:border-box; 
+							padding:0; margin:0; position:fixed; width:100%; height:var(--maxvh); 
+							}
+
+</style>
+<body>
+	<button style="margin-top:50vh;margin-left:50%" id="but">Send</button>
+<script>
+
+  $("#but").on("click",()=>{
+		trace("ok")
+		sendJsonData()
+  })
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// MAIN 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+let d={ model: "claude-3-haiku-20240307",
+		tokens: 4096,
+		role: "user",
+		system: "You are a middle-school English teacher talking to student. Respond only the option's number",
+		question:" What is a gray emotion",
+		objective: "Identify which of the <options> that is most similar to this <question>",
+		instructions :"",
+		options: [ 	"1. it's a color",
+				  	"2. the sky",
+					"3. it is sad",
+					"4. it is happy"
+		]};
+
+
+
+
+	
+
+
+	
+
+
+
+
+function sendJsonData(){
+		let i,content=`<question>${d.question}</question>
+		<objective>${d.objective}</objective>
+		<instructions>${d.instructions}</instructions>
+		<options>\n`;
+		for (i=0;i<d.options.length;++i)	content+="<op>"+d.options[i]+"</op>\n";
+		content+="</options>\n";
+		d.content=content.replace(/\t/g,"");
+
+
+
+	fetch('http://localhost:3000/api', {
+		method: "POST", 
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(d)
+		})
+	.then(res => res.json())
+	.then(data => console.log(data))
+
+	}
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+// HELPERS 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+	function trace(msg, p1, p2, p3, p4)																// CONSOLE 
+	{
+		if (p4 != undefined)
+			console.log(msg,p1,p2,p3,p4);
+		else if (p3 != undefined)
+			console.log(msg,p1,p2,p3);
+		else if (p2 != undefined)
+			console.log(msg,p1,p2);
+		else if (p1 != undefined)
+			console.log(msg,p1);
+		else
+			console.log(msg);
+	}
+
+	function Sound(sound, mute)																		// PLAY SOUND
+	{
+		var snd=new Audio();																			// Init audio object
+		if (sound.match(/\.mp3/i))		snd=new Audio(sound)											// If an MP3 file
+		else							snd=new Audio("img/"+sound+".mp3");								// Use built in mp3
+		if (!mute)	{																					// If not initing or muting	
+			snd.volume=100/100;																			// Set volume
+			snd.play();																					// Play it
+			}
+	}
+
+</script>
+
+
+
+</body>
+</html>
