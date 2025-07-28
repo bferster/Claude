@@ -7,6 +7,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/themes/smoothness/jquery-ui.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"></script>
+		<script src="rsu.js"></script>
+	
+	
 	</head>
 	<style>
 		 body { 			font-family:SegoeUI,Verdana,Geneva,sans-serif; font-size:14px; box-sizing:border-box; 
@@ -28,21 +31,120 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-let d={ model: "claude-3-haiku-20240307",
+
+	let prompt={ 
+//		model: "claude-opus-4-20250514",
+		model: "claude-3-haiku-20240307",
 		tokens: 4096,
 		role: "user",
-		system: "You are a middle-school English teacher talking to student. Respond only the option's number",
-		question:" What is a gray emotion",
+		system: "You are a middle-school English teacher talking to student. Respond only the option's <intent> number. Don't give a reason",
+		question: "",
+		temperature: 0,
 		objective: "Identify which of the <options> that is most similar to this <question>",
 		instructions :"",
-		options: [ 	"1. it's a color",
-				  	"2. the sky",
-					"3. it is sad",
-					"4. it is happy"
-		]};
-
-
-
+		options: [{ intent:110, category:"Task Specific", title:"Low information compliment",
+					description:  "Teacher compliments student response (e.g., “nice job,” “good,” or “right”). This includes when a teacher says “correct” to an incorrect response. This type of feedback has low impact on student learning, low transfer to other tasks, and provides low information to students about their thinking",
+					definitions:[ "Acknowledges but does not engage with response: Teacher acknowledges student’s contribution, but moves on.",
+								  "Acknowledges but does not engage with response: Teacher accepts the answer as correct without further probing, or expresses a generic compliment.",
+								  "Acknowledges but does not engage with response: Accepts the answer as correct without further probing, or expresses a generic compliment.",
+								  "Acknowledges but does not engage with response: Other students in the group wouldn’t learn from this response.",
+								  "Acknowledges but does not engage with response: Acknowledges that student was “close” to the correct answer, but does not provide additional feedback.",
+								  "Acknowledges but does not engage with response: Teacher acknowledges a student contribution not related to the question or text.",
+								  "Acknowledges but does not engage with response: Teacher restates student response",
+								  "Treats partial understandings as valid interpretations of text: Teacher acknowledges partial understandings as valid interpretations of the text or valid answers to a question",
+								  "Treats partial understandings as valid interpretations of text: Affirms that an answer is not incorrect, despite it being partially correct or incomplete.",
+								  "Recognizes student background knowledge without a connection to text or task: Teacher recognizes students’ past experiences and background knowledge, but does not make a connection to enhance understanding of  the text or task.",
+								  "Recognizes student background knowledge without a connection to text or task: Teacher provides a generic remark that a student is a resource for others due to their background knowledge, even though the student’s answer may be wrong or irrelevant background knowledge was shared.",
+								  "Recognizes or repeats a correct student response with no information: Teacher recognizes or repeats student CORRECT response"],
+					},
+			 	 {intent:120, category:"Task Specific", title:"Try again",
+					description: "Teacher identifies student response as incorrect and prompts for the next attempt without giving specific guidance about how to correct the misunderstanding (e.g., “not quite,” “almost,” “Can anyone else try it? or “Read it again”). This type of feedback has low impact on student learning, low transfer to other tasks, and provides low information to students about their thinking. The teacher is doing the thinking for the students.",
+					definitions:["Prompts to try again without direction or additional support: Teacher asks students to try again.",
+								 "Repeats or restates the discussion or their own question without additional support: Teacher repeats or restates the discussion question.",
+								 "Repeats or restates the discussion or their own question without additional support: Teacher repeats or restates their own question. Different than a suggestion because the teacher has NOT explained why - tells students through question or statement",
+								 "Prompts student to state or restate a response: Teacher prompts the student to state or restate their response."],
+				 	},
+			 	 {intent:130, category:"Task Specific", title:"Low information correction",
+					description: "Teacher identifies student response as incorrect by providing the correct response, but the teacher does not indicate what thinking or understanding is necessary to reach the correct answer (e.g., “Actually the answer is ___,” “No, it’s ____,”). This type of feedback has low impact on student learning, low transfer to other tasks, and provides low information to students about their thinking.",
+					definitions:["Acknowledges partial understanding as incomplete: Teacher acknowledges that the response is partially correct and may even correct the response, but does not (a) indicate WHY the answer is incorrect/incomplete and/or (b) engage students in the process.",
+								 "Acknowledges partial understanding as incomplete: Teacher Combines answers from several students to create a composite answer, so that no one is technically wrong.",
+								 "Attempts to correct by involving other students to support: Teacher asks student(s) to contribute to an answer.",
+								 "Attempts to correct by involving other students to support: Teacher asks students to comment on each other’s responses in an effort to correct the response.",
+								 "Attempts to correct by involving other students to support: Pairs or groups students for support, without providing feedback, further clarification or suggestions.",
+								 "Simply corrects without engaging the student: Teacher simply provides the correct answer or corrected information but does not (a) indicate WHY the answer is incorrect/incomplete and/or (b) engage students in the process."],
+				 	},
+			 	 {intent:140, category:"Task Specific", title:"Tangential story or instruction",
+					description: "Teacher asks students questions or tells a story tangentially related to the topic, but not relevant to the question or text. This may be in an effort to learn more about a student and can lead to confusion among students connecting these comments to their response, question, or the text.",
+					definitions:["Tangential instruction without purposeful connection to question or text: Teacher asks follow up questions about a topic that isn’t directly relevant to the question or text."],
+				 	},
+				 {intent:150, category:"Task Specific", title:"Try again",
+					description: "Teacher asks questions or provides statements that do not contain any specific information related to the student responses, text, or question.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:210, category:"Explain & Clarify", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},					
+				 {intent:220, category:"Explain & Clarify", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:230, category:"Explain & Clarify", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:310, category:"Value", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:410, category:"Concern & Suggestion", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:420, category:"Concern & Suggestion", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:430, category:"Concern & Suggestion", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:510, category:" Learning Beyond Task", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:520, category:" Learning Beyond Task", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					},
+				 {intent:530, category:" Learning Beyond Task", title:"Teacher explanations of text, question, responses, and purpose of the group",
+					description: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. The 220 codes have in common that the teacher is doing the thinking and not sharing the thinking - so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+					definitions:["Low information question or statement: Teacher asks a generic or vague check for understanding, i.e., one that does not get at the student's deeper understanding.",
+								 "Low information question or statement: Teacher provides a statement/instruction with low information (vague actions for students).",
+								 "Low information question or statement: Teacher provides a low information purpose statement (vague objective for the lesson)."],
+					}
+			]
+};
 
 	
 
@@ -50,18 +152,29 @@ let d={ model: "claude-3-haiku-20240307",
 	
 
 
+
+let question="Okay. When you deposit something, how much do you deposit? Do you have to deposit a really large piece of something or smaller pieces?"
 
 
 function sendJsonData(){
-		let i,content=`<question>${d.question}</question>
-		<objective>${d.objective}</objective>
-		<instructions>${d.instructions}</instructions>
-		<options>\n`;
-		for (i=0;i<d.options.length;++i)	content+="<op>"+d.options[i]+"</op>\n";
-		content+="</options>\n";
-		d.content=content.replace(/\t/g,"");
 
+trace(prompt)
 
+		let i,j,d={}
+		d.role=prompt.role;			d.token=prompt.tokens; 		d.instructions=prompt.instructions; 
+		d.model=prompt.model; 		d.system=prompt.system;		d.temperature=prompt.temperature;
+		d.content=`<question>${question}</question>\n<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n<options>\n`;
+		for (i=0;i<prompt.options.length;++i) {
+			d.content+="<op><intent>"+prompt.options[i].intent+"</intent>\n";
+			d.content+="<category>"+prompt.options[i].category+"</category>\n";
+			d.content+="<title>"+prompt.options[i].title+"</title>\n";
+			d.content+="<description>"+prompt.options[i].description+"</description>\n";
+			d.content+="<definitions>\n";
+			for (j=0;j<prompt.options[i].definitions.length;++j) 
+				d.content+="* "+prompt.options[i].definitions[j]+"\n";
+			d.content+="</definitions></op>\n\n";
+		}
+trace(d.content)
 
 	fetch('http://localhost:3000/api', {
 		method: "POST", 
