@@ -31,26 +31,20 @@ class ClaudeAPI {
       };
 
       const req = https.request(options, (res) => {
-        let responseData = '';
+        	let responseData = '';
+        	res.on('data', (chunk) => { responseData += chunk;
+        		});
         
-        res.on('data', (chunk) => {
-          responseData += chunk;
-        });
-        
-        res.on('end', () => {
-          try {
-            const parsedData = JSON.parse(responseData);
-            
-            if (res.statusCode >= 200 && res.statusCode < 300) {
-              resolve(parsedData);
-            } else {
-              reject(new Error(`API Error ${res.statusCode}: ${parsedData.error?.message || 'Unknown error'}`));
-            }
-          } catch (parseError) {
-            reject(new Error(`Failed to parse response: ${parseError.message}`));
-          }
-        });
-      });
+        res.on('end', () =>{
+			try {
+				const parsedData = JSON.parse(responseData);
+				if (res.statusCode >= 200 && res.statusCode < 300) 	resolve(parsedData);
+				else   												reject(new Error(`API Error ${res.statusCode}: ${parsedData.error?.message || 'Unknown error'}`));
+				} catch (parseError) {
+			reject(new Error(`Failed to parse response: ${parseError.message}`));
+			}
+			});
+    	});
 
       req.on('error', (error) => {
         reject(new Error(`Request failed: ${error.message}`));
@@ -68,7 +62,7 @@ class ClaudeAPI {
   }
 
  async createMessage(options) {
-    const {
+	const {
       model = 'claude-3-haiku-20240307',
       messages,
       max_tokens = 4096,
@@ -131,6 +125,7 @@ class ClaudeAPI {
 				messages: [ { role: d.role, content: d.content} ],
 				system:d.system,
 				max_tokens: d.tokens,
+				cache_control: {type: "ephemeral"},
 				temperature: 0.7
 				});
 			console.log('Claude:', response.content[0].text);
