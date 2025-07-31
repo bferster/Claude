@@ -18,20 +18,24 @@
 
 </style>
 <body>
+	<select id="model">
+		<option>claude-opus-4-20250514</option>
+		<option>claude-3-haiku-20240307</option>
+	</select>
+	<br><br>
 	<img style="position:absolute; top:-8vh;left:-10.5%; width:8%" src="img/agilelogo.png">
 	<input id="input"  style="width:70%;padding:8px;" type="text">
 	<button id="but">Send</button><br><br>
 	<div id="output" style="width:70%;padding:8px;border:1px solid;overflow-y:scroll;max-height:60vh"> Response will show up here...</div>
 <script>
 
-  	$("#but").on("click",()=>{ sendJsonData($("#input").val()) });
+  	$("#but").on("click",()=>	{ sendJsonData($("#input").val()) });
+ 	$("#model").on("click",()=>	{ prompt.model=$("#model").val()  });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // MAIN 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-	let first=true;
 	let d={};
 
 	function sendJsonData(remark)
@@ -41,21 +45,18 @@
 		d.role=prompt.role;			d.tokens=prompt.tokens; 		d.instructions=prompt.instructions; 
 		d.model=prompt.model; 		d.system=prompt.system;			d.temperature=prompt.temperature;
 		d.content=`<remark>Teacher said: ${remark}</remark>\n<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n`;
-		if (first) {
-			first=false;
-			d.content+="<options>\n";
-			for (i=0;i<prompt.options.length;++i) {
-					d.content+="<op"+i+"><intent>"+prompt.options[i].intent+"</intent>";
-					d.content+="<category>"+prompt.options[i].category+"</category>\n";
-					d.content+="<description>"+prompt.options[i].description+"</description>\n";
-					d.content+="<information>"+prompt.options[i].information+"</information>\n";
-					d.content+="<definitions>\n";
-					for (j=0;j<prompt.options[i].definitions.length;++j) 
-						d.content+="* "+prompt.options[i].definitions[j]+"\n";
-					d.content+="</definitions>\n</op"+i+">\n\n";
-					}
+		d.content+="<options>\n";
+		for (i=0;i<prompt.options.length;++i) {
+				d.content+="<op"+i+"><intent>"+prompt.options[i].intent+"</intent>";
+				d.content+="<category>"+prompt.options[i].category+"</category>\n";
+				d.content+="<description>"+prompt.options[i].description+"</description>\n";
+				d.content+="<information>"+prompt.options[i].information+"</information>\n";
+				d.content+="<definitions>\n";
+				for (j=0;j<prompt.options[i].definitions.length;++j) 
+					d.content+="* "+prompt.options[i].definitions[j]+"\n";
+				d.content+="</definitions>\n</op"+i+">\n\n";
+				}
 			d.content+="</options>\n";
-		}
 trace(d)
 
 	fetch('http://localhost:3000/api', {

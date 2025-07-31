@@ -125,7 +125,6 @@ class ClaudeAPI {
 				messages: [ { role: d.role, content: d.content} ],
 				system:d.system,
 				max_tokens: d.tokens,
-				cache_control: {type: "ephemeral"},
 				temperature: 0.7
 				});
 			console.log('Claude:', response.content[0].text);
