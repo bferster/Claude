@@ -29,14 +29,19 @@
 	<div id="output" style="width:70%;padding:8px;border:1px solid;overflow-y:scroll;max-height:60vh"> Response will show up here...</div>
 <script>
 
-  	$("#but").on("click",()=>	{ sendJsonData($("#input").val()) });
- 	$("#model").on("click",()=>	{ prompt.model=$("#model").val()  });
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // MAIN 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	let d={};
+	var d={};
+	var timeStart;
+
+  	$("#but").on("click",()=>	{ 
+		let now=new Date();
+		timeStart=now.getTime()
+		prompt.model=$("#model").val();
+		sendJsonData($("#input").val()) ;
+		});
 
 	function sendJsonData(remark)
 	{
@@ -44,7 +49,8 @@
 		LoadingIcon(true);
 		d.role=prompt.role;			d.tokens=prompt.tokens; 		d.instructions=prompt.instructions; 
 		d.model=prompt.model; 		d.system=prompt.system;			d.temperature=prompt.temperature;
-		d.content=`<remark>Teacher said: ${remark}</remark>\n<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n`;
+		d.remark=`remark>Teacher said: ${remark}</remark>\n`;
+		d.content=`<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n`;
 		d.content+="<options>\n";
 		for (i=0;i<prompt.options.length;++i) {
 				d.content+="<op"+i+"><intent>"+prompt.options[i].intent+"</intent>";
@@ -57,36 +63,35 @@
 				d.content+="</definitions>\n</op"+i+">\n\n";
 				}
 			d.content+="</options>\n";
-trace(d)
 
-	fetch('http://localhost:3000/api', {
-		method: "POST", 
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(d)
-		})
-	.then(res => res.json())
-	.then(data => {
-		let s=JSON.stringify(data);
-		s=s.replace(/{"R":"/,"");
-		s=s.replace(/\\n/g,"<br>");
-		s=s.replace(/}/g,"<br>");
-		$("#output").html(s+`<button id="prompt" style="float:right">Show prompt</button>`);
-		$("#prompt").on("click",()=>{
-			s=d.content.replace(/</g," [");
-			s=s.replace(/>/g,"] ");
-			s=s.replace(/\n/g,"<br>");
-			$("#output").html($("#output").html()+"<br><b>Prompt:</b><br><br>"+s);
-			$("#prompt").remove();
-			});
-		console.log(data)
-		LoadingIcon();
-		})
+		fetch('http://localhost:3000/api', {
+			method: "POST", 
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(d)
+			})
+		.then(res => res.json())
+		.then(data => {
+			now=new Date();
+			let s=(now.getTime()-timeStart)/1000+" seconds<br><br>";
+			s+=JSON.stringify(data);
+			s=s.replace(/{"R":"/,"");
+			s=s.replace(/\\n/g,"<br>");
+			s=s.replace(/\\"/g,'"');
+			s=s.replace(/}/g,"<br>");
+			$("#output").html(s+`<button id="prompt" style="float:right">Show prompt</button>`);
+			$("#prompt").on("click",()=>{
+				s=d.content.replace(/</g," [");
+				s=s.replace(/>/g,"] ");
+				s=s.replace(/\n/g,"<br>");
+				$("#output").html($("#output").html()+"<br><b>Prompt:</b><br><br>"+s);
+				$("#prompt").remove();
+				});
+			LoadingIcon();
+			})
 
 	}
 
-
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 // HELPERS 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

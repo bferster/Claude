@@ -117,15 +117,20 @@ class ClaudeAPI {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 	const claude = new ClaudeAPI(process.env.ANTHROPIC_API_KEY);
-	
+
 	async function Chat(d) {
+		
 		try {
 			const response = await claude.createMessage({
 				model: d.model,
-				messages: [ { role: d.role, content: d.content} ],
-				system:d.system,
 				max_tokens: d.tokens,
-				temperature: 0.7
+				temperature: 0.7,
+				messages: [{ 
+					role: d.role, 
+           			content: [	{ type: "text", text: d.content, cache_control: {type: "ephemeral"} },
+	                  			{ type: "text",text: d.remark } ]
+							}],
+				system: [	{ type: "text", text: d.system, cache_control: {type: "ephemeral"} } ]
 				});
 			console.log('Claude:', response.content[0].text);
 			console.log('Usage:', response.usage);

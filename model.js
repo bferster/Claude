@@ -106,13 +106,12 @@
 			];
 
 	var prompt={
-		content:"",
 		tokens: 4096,
 		role: "user",
 		system: "You are a middle-school English teacher talking to middle school student. Respond only the option's <intent> number. Also how sure you are about this choice, as a percentage from 0 to 100",
 		question: "",
 		model: model,
-		temperature: .7,
+		temperature: .5,
 		objective: "Identify which of the <options> that is most similar to this <question>",
 		instructions :"",
 		options: options
