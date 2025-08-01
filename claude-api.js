@@ -124,13 +124,13 @@ class ClaudeAPI {
 			const response = await claude.createMessage({
 				model: d.model,
 				max_tokens: d.tokens,
-				temperature: 0.7,
+				temperature: 0.5,
 				messages: [{ 
 					role: d.role, 
-           			content: [	{ type: "text", text: d.content, cache_control: {type: "ephemeral"} },
+           			content: [	{ type: "text", text: d.content, cache_control: {type: "ephemeral" } },
 	                  			{ type: "text",text: d.remark } ]
 							}],
-				system: [	{ type: "text", text: d.system, cache_control: {type: "ephemeral"} } ]
+				system: [	{ type: "text", text: d.system, cache_control: {type: "ephemeral" } } ]
 				});
 			console.log('Claude:', response.content[0].text);
 			console.log('Usage:', response.usage);

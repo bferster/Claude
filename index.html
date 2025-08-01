@@ -19,6 +19,7 @@
 </style>
 <body>
 	<select id="model">
+		<option>claude-sonnet-4-20250514</option>
 		<option>claude-opus-4-20250514</option>
 		<option>claude-3-haiku-20240307</option>
 	</select>
@@ -42,6 +43,8 @@
 		prompt.model=$("#model").val();
 		sendJsonData($("#input").val()) ;
 		});
+
+	$("#input")[0].addEventListener('keydown', function(e) { if (e.key === 'Enter') $("#but").trigger("click") });
 
 	function sendJsonData(remark)
 	{
