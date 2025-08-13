@@ -1,8 +1,9 @@
+const https = require('https');
+const OpenAI = require("openai");
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // CLAUDE API
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
-const https = require('https');
 
 class ClaudeAPI {
 	constructor(apiKey, options = {}) {
@@ -113,29 +114,47 @@ class ClaudeAPI {
 		});
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-// CLAUDE
+// CHAT API ACCESS
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 	const claude = new ClaudeAPI(process.env.ANTHROPIC_API_KEY);
+	const openAI = new OpenAI({ apiKey: process.env.OPENAI_API_KEY} );
 
 	async function Chat(d) {
-		
-		try {
-			const response = await claude.createMessage({
-				model: d.model,
-				max_tokens: d.tokens,
-				temperature: 0.5,
-				messages: [{ 
-					role: d.role, 
-           			content: [	{ type: "text", text: d.content, cache_control: {type: "ephemeral" } },
-	                  			{ type: "text",text: d.remark } ]
-							}],
-				system: [	{ type: "text", text: d.system, cache_control: {type: "ephemeral" } } ]
-				});
-			console.log('Claude:', response.content[0].text);
-			console.log('Usage:', response.usage);
-			return response.content[0].text;
-		} catch (error) { console.error('Error:', error.message); }
+
+		if (d.model.match(/gpt/i)) {
+		    try {
+   				const response = await openAI.chat.completions.create({
+      			model: d.model,
+        		max_completion_tokens: d.tokens,
+  				messages: [
+						{ role: "system", content: d.system },
+						{ role: "user", content: d.content },
+						{ role: "user", content: d.remark } ]
+					});
+   				console.log(response.choices[0].message.content);
+				console.log("Usage info:", response.usage);
+				return response.choices[0].message.content;
+  				} catch (error) { console.error("Error calling OpenAI API:", error); }
+			}
+		else{
+			try {
+				const response = await claude.createMessage({
+					model: d.model,
+					max_tokens: d.tokens,
+					temperature: 0.5,
+					messages: [{ 
+						role: d.role, 
+						content: [	{ type: "text", text: d.content, cache_control: {type: "ephemeral" } },
+									{ type: "text",text: d.remark } ]
+								}],
+					system: [	{ type: "text", text: d.system, cache_control: {type: "ephemeral" } } ]
+					});
+				console.log('Claude:', response.content[0].text);
+				console.log('Usage:', response.usage);
+				return response.content[0].text;
+			} catch (error) { console.error('Claude Error:', error.message); }
+		}
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
