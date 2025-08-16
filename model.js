@@ -108,7 +108,7 @@
 	var prompt={
 		tokens: 4096,
 		role: "user",
-		system: "You are a middle-school English teacher talking to middle school student. Respond only the option's <intent> number. Also how sure you are about this choice, as a percentage from 0 to 100",
+		system: "You are a middle-school English teacher talking to middle school student. Respond only the option's <intent> number.",
 		question: "",
 		model: model,
 		temperature: .5,
