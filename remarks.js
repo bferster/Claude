@@ -1787,11 +1787,6 @@ var remarks=[
   },
   {
     "intent": 420.1,
-    "index": 2,
-    "remark": "[Strategy]"
-  },
-  {
-    "intent": 420.1,
     "index": 3,
     "remark": "Before we reread the text, I want you to tell me what the key words are in the question because these keywords are going to be the focus of your reading."
   },
@@ -1822,11 +1817,6 @@ var remarks=[
   },
   {
     "intent": 420.2,
-    "index": 6,
-    "remark": "[Thinking strategy]"
-  },
-  {
-    "intent": 420.2,
     "index": 7,
     "remark": "A question relates to the passage."
   },
@@ -1834,11 +1824,6 @@ var remarks=[
     "intent": 420.2,
     "index": 8,
     "remark": "So, when it says equipment in the question, what we want to do is to find the equipment that was mentioned in the passage."
-  },
-  {
-    "intent": 420.2,
-    "index": 9,
-    "remark": "[Strategy]"
   },
   {
     "intent": 420.2,

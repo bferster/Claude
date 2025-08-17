@@ -26,11 +26,11 @@
 </style>
 <body>
 	<select id="model" class="is">
+		<option>claude-sonnet-4-20250514</option>
 		<option>gpt-5</option>		
 		<option>gpt-5-mini</option>		
 		<option>gpt-5-nano</option>		
 		<option>claude-opus-4-20250514</option>
-		<option>claude-sonnet-4-20250514</option>
 		<option>claude-3-haiku-20240307</option> 
 	</select>
 		<select id="intent" class="is">
@@ -41,12 +41,12 @@
 		<option>140</option>		
 		<option>150</option>		
 		<option>210</option>		
-		<option>210</option>		
 		<option>220</option>		
 		<option>230</option>		
 		<option>310</option>		
+		<option>410</option>		
 		<option>420</option>		
-		<option>420</option>		
+		<option>430</option>		
 		<option>510</option>		
 		<option>520</option>		
 		<option>530</option>		
@@ -110,11 +110,16 @@
 				d.content+="<information>"+prompt.options[i].information+"</information>\n";
 				d.content+="<definitions>\n";
 				for (j=0;j<prompt.options[i].definitions.length;++j) 
-					d.content+="* "+prompt.options[i].definitions[j]+"\n";
-				d.content+="</definitions>\n</op"+i+">\n\n";
+					d.content+="- "+prompt.options[i].definitions[j]+"\n";
+				d.content+="</definitions>\n</op"+i+">\n";
+				if (prompt.options[i].examples) {
+					d.content+="<examples>\n";
+						for (j=0;j<prompt.options[i].examples.length;++j) 
+						d.content+="- "+prompt.options[i].examples[j]+"\n";				
+					d.content+="</examples>\n</op"+i+">\n\n";
+					}
 				}
 			d.content+="</options>\n";
-
 		fetch('http://localhost:3000/api', {
 			method: "POST", 
 			headers: { 'Content-Type': 'application/json' },
