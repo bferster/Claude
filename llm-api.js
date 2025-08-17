@@ -132,7 +132,7 @@ class ClaudeAPI {
 						{ role: "user", content: d.content },
 						{ role: "user", content: d.remark } ]
 					});
-   				console.log(response.choices[0].message.content);
+   				console.log(response.choices[0].message.content[0].text);
 				console.log("Usage info:", response.usage);
 				return response.choices[0].message.content;
   				} catch (error) { console.error("Error calling OpenAI API:", error); }

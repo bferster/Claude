@@ -129,11 +129,7 @@
 		.then(data => {
 			now=new Date();
 			let s=(now.getTime()-timeStart)/1000+" seconds<br><br>";
-			s+=JSON.stringify(data);
-			s=s.replace(/{"R":"/,"");
-			s=s.replace(/\\n/g,"<br>");
-			s=s.replace(/\\"/g,'"');
-			s=s.replace(/}/g,"<br>");
+			s+="<b>Intent is: "+data.R+"</b><br>";
 			$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
 			$("#prompt").on("click",()=>{
 				s=d.content.replace(/</g," [");
