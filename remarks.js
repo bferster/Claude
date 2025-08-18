@@ -6,11 +6,6 @@ var remarks=[
   },
   {
     "intent": "110.1",
-    "index": 2,
-    "remark": "Okay, student."
-  },
-  {
-    "intent": "110.1",
     "index": 3,
     "remark": "Let's hold on just a second."
   },
@@ -76,11 +71,6 @@ var remarks=[
   },
   {
     "intent": "110.1",
-    "index": 17,
-    "remark": "There you go."
-  },
-  {
-    "intent": "110.1",
     "index": 18,
     "remark": "There's something small that they're looking at, it is the water."
   },
@@ -132,11 +122,6 @@ var remarks=[
   {
     "intent": "110.1",
     "index": 28,
-    "remark": "That's good."
-  },
-  {
-    "intent": "110.1",
-    "index": 29,
     "remark": "That's good."
   },
   {
@@ -267,7 +252,7 @@ var remarks=[
   {
     "intent": "110.2",
     "index": 55,
-    "remark": "[Teacher says \"lunar orbiter\" when the student did not.] Yeah, they looked at it really close with the microscope."
+    "remark": "Yeah, they looked at it really close with the microscope."
   },
   {
     "intent": "110.2",
@@ -333,11 +318,6 @@ var remarks=[
     "intent": "110.3",
     "index": 68,
     "remark": "Well you know what, because you do know a lot and that means you can help the rest of us out that don't know as much as you."
-  },
-  {
-    "intent": "110.3",
-    "index": 69,
-    "remark": "Good."
   },
   {
     "intent": "110.3",
@@ -707,7 +687,7 @@ var remarks=[
   {
     "intent": "130.3",
     "index": 145,
-    "remark": "Discover\" is when we find it."
+    "remark": "Discover is when we find it."
   },
   {
     "intent": "130.3",
@@ -909,12 +889,7 @@ var remarks=[
     "index": 187,
     "remark": "Okay, well, we're just going to work on making sure we have the best answer for the question."
   },
-  {
-    "intent": "150.1",
-    "index": 188,
-    "remark": "Well, student."
-  },
-  {
+ {
     "intent": "150.1",
     "index": 189,
     "remark": "That's great."
@@ -972,11 +947,6 @@ var remarks=[
   },
   {
     "intent": 210.1,
-    "index": 3,
-    "remark": "[Teacher contextualizes why the question focuses on NASA sending equipment to the moon.]"
-  },
-  {
-    "intent": 210.1,
     "index": 4,
     "remark": "Part of the reason scientists are so interested in finding water on other planets is because we living things need water to survive."
   },
@@ -1000,12 +970,7 @@ var remarks=[
     "index": 1,
     "remark": "Yeah, that's a good point that you do need oxygen tanks whenever you're in outer space, but we're talking about the different pieces of equipment that you need to be able to see what's on the moon."
   },
-  {
-    "intent": 210.2,
-    "index": 2,
-    "remark": "Right."
-  },
-  {
+ {
     "intent": 210.2,
     "index": 3,
     "remark": "So the question is asking us what type of equipment that the scientists used to discover the water on the moon."
@@ -1072,11 +1037,6 @@ var remarks=[
   },
   {
     "intent": 210.2,
-    "index": 16,
-    "remark": "Alright."
-  },
-  {
-    "intent": 210.2,
     "index": 17,
     "remark": "Is there anybody who wants to share the answer with us?"
   },
@@ -1124,11 +1084,6 @@ var remarks=[
     "intent": 210.3,
     "index": 2,
     "remark": "Remember, that NASA can't always send astronauts to space and may need to send machines sometimes."
-  },
-  {
-    "intent": 210.3,
-    "index": 3,
-    "remark": "Well, yeah."
   },
   {
     "intent": 210.3,
@@ -1289,11 +1244,6 @@ var remarks=[
     "intent": 210.4,
     "index": 17,
     "remark": "So where did they find the water?"
-  },
-  {
-    "intent": 210.4,
-    "index": 18,
-    "remark": "There you go."
   },
   {
     "intent": 210.4,
@@ -1507,11 +1457,6 @@ var remarks=[
   },
   {
     "intent": 230.1,
-    "index": 9,
-    "remark": "Right?"
-  },
-  {
-    "intent": 230.1,
     "index": 10,
     "remark": "How did you know that water's heavy?"
   },
@@ -1539,11 +1484,6 @@ var remarks=[
     "intent": 230.1,
     "index": 15,
     "remark": "Do you think that that is part of what makes it valuable to NASA and people maybe like your father?"
-  },
-  {
-    "intent": 230.2,
-    "index": 1,
-    "remark": "All right."
   },
   {
     "intent": 230.2,
@@ -1582,11 +1522,6 @@ var remarks=[
   },
   {
     "intent": 230.3,
-    "index": 2,
-    "remark": "Is that right?"
-  },
-  {
-    "intent": 230.3,
     "index": 3,
     "remark": "student, you think that the microscope was the tool that was used to discover water on the moon, but student, you say it was the small machine."
   },
@@ -1599,11 +1534,6 @@ var remarks=[
     "intent": 230.3,
     "index": 5,
     "remark": "Okay, student and student both agree that it was the microscope."
-  },
-  {
-    "intent": 230.3,
-    "index": 6,
-    "remark": "Right?"
   },
   {
     "intent": 230.3,
@@ -1637,11 +1567,6 @@ var remarks=[
   },
   {
     "intent": 230.3,
-    "index": 13,
-    "remark": "It is very heavy."
-  },
-  {
-    "intent": 230.3,
     "index": 14,
     "remark": "Going back to your first statement so transporting it would be something that we would have to do."
   },
@@ -1652,11 +1577,6 @@ var remarks=[
   },
   {
     "intent": 230.3,
-    "index": 16,
-    "remark": "It is very heavy."
-  },
-  {
-    "intent": 230.3,
     "index": 17,
     "remark": "Going back to your first statement so transporting it would be something that we would have to do."
   },
@@ -1664,11 +1584,6 @@ var remarks=[
     "intent": 310.1,
     "index": 1,
     "remark": "I love that you cited where you found it in the text, paragraph 2."
-  },
-  {
-    "intent": 310.1,
-    "index": 2,
-    "remark": "That's very good."
   },
   {
     "intent": 310.1,
@@ -1683,7 +1598,7 @@ var remarks=[
   {
     "intent": 310.1,
     "index": 5,
-    "remark": "She used the passage that we provided to find her answer."
+    "remark": "You used the passage that we provided to find your answer."
   },
   {
     "intent": 310.1,
@@ -1694,11 +1609,6 @@ var remarks=[
     "intent": 310.1,
     "index": 7,
     "remark": "You used your background knowledge about buried treasures to answer my question"
-  },
-  {
-    "intent": 310.1,
-    "index": 8,
-    "remark": "Yes, I agree."
   },
   {
     "intent": 310.1,
@@ -1713,7 +1623,7 @@ var remarks=[
   {
     "intent": 310.1,
     "index": 11,
-    "remark": "[The question is actually a good question]"
+    "remark": "The question is actually a good question"
   },
   {
     "intent": 310.1,
@@ -1827,11 +1737,6 @@ var remarks=[
   },
   {
     "intent": 420.2,
-    "index": 10,
-    "remark": "So next time."
-  },
-  {
-    "intent": 420.2,
     "index": 11,
     "remark": "How about we try."
   },
@@ -1917,11 +1822,6 @@ var remarks=[
   },
   {
     "intent": 430.2,
-    "index": 2,
-    "remark": "And that was right too."
-  },
-  {
-    "intent": 430.2,
     "index": 3,
     "remark": "But that was not enough for that question."
   },
@@ -1949,16 +1849,6 @@ var remarks=[
     "intent": 430.2,
     "index": 8,
     "remark": "You can look back in your reading for that."
-  },
-  {
-    "intent": 430.2,
-    "index": 9,
-    "remark": "That's very good."
-  },
-  {
-    "intent": 430.2,
-    "index": 10,
-    "remark": "That's very good."
   },
   {
     "intent": 430.2,
@@ -2017,21 +1907,6 @@ var remarks=[
   },
   {
     "intent": 430.3,
-    "index": 6,
-    "remark": "First - what happened (student replies), Then ____."
-  },
-  {
-    "intent": 430.3,
-    "index": 7,
-    "remark": "And then ______."
-  },
-  {
-    "intent": 430.3,
-    "index": 8,
-    "remark": "So ___________."
-  },
-  {
-    "intent": 430.3,
     "index": 9,
     "remark": "What was discovered on the moon?"
   },
@@ -2073,7 +1948,7 @@ var remarks=[
   {
     "intent": 510.1,
     "index": 6,
-    "remark": "(e.g. when you pointed out that the moon is a desert so craters were not full of water, or when you went back to the text to find out how much water was found)"
+    "remark": "you pointed out that the moon is a desert so craters were not full of water, or when you went back to the text to find out how much water was found)"
   },
   {
     "intent": 510.1,
@@ -2084,11 +1959,6 @@ var remarks=[
     "intent": 510.1,
     "index": 8,
     "remark": "student just showed us how to use context clues."
-  },
-  {
-    "intent": 510.1,
-    "index": 9,
-    "remark": "First, he…"
   },
   {
     "intent": 520.1,

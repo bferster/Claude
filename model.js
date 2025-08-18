@@ -126,13 +126,14 @@
 							"That’s a partial idea — you’ll need to use evidence from the text to make it stronger"]
 			},				
 			{ intent:510, category:" Learning Beyond Task", description:"Metacognition",
-					information: "Awareness of one’s own thought processes to plan, monitor, adjust, and reflect on learning actions, outcomes, and experiences.For example,  Such as: How has your thinking changed from your first answer to your answer now?",
+					information: "Awareness of one’s own thought processes to plan, monitor, adjust, and reflect on learning actions, outcomes, and experiences. How has your thinking changed from your first answer to your answer now?",
 					definitions:[ "Highlights a thinking strategy that students used: Teacher introduces or explains a thinking strategy.",
 									"Highlights a thinking strategy that students used: Teacher identifies the type of thinking a student used and thinking actions.",
-									"Highlights a thinking strategy that students used: Teacher highlights a thinking strategy that students used."],
+									"Highlights a thinking strategy that students used: Teacher highlights a thinking strategy that students used."
+								],
 					examples:[  
 						"How did you figure that out?", 
-						"What strategy worked best for you here?"]
+						"What strategy worked best for you here?" ]
 			},
 			{ intent:520, category:" Learning Beyond Task", description:"Transfer",
 					information: "Apply learning to over time to different contexts, with different materials and/or purposes",
@@ -158,18 +159,16 @@
 		remark: "",
 		model: model,
 		temperature: .5,
-		objective: "Classify a teacher’s remark into the single option that best matches its intent.  ",
+		objective: "Classify a teacher’s remark into the single option that best matches its intent. Output only the option ID (e.g., 230). Do not explain your choice ",
 		instructions : `1. Read the teacher’s <remark> carefully.
 						2. Determine the main intent of the remark (what the teacher is trying to do). Ignore filler or polite words.  
 						3. Compare it to <options> (using the categories, descriptions, definitions, and examples in each one).  
-						4. Apply <key distinguishers>, <disambiguation hierarchy>, add <default rule>.  
-						5. Output only the option ID (e.g., 230). Do not explain your choice. 
+						4. Apply <key distinguishers>, <disambiguation hierarchy>, add <default rule>.   
 						<key distinguishers>
-							- "Correction" requires the teacher to indicate something is wrong
-							- "Suggestion" requires a clear, actionable next step
-							- "Concern" requires explicit explanation of WHY something is problematic
+							- "Correction" requires the teacher to indicate something the student said is wrong
+							- "Suggestion" requires the teacher to indicate a clear, actionable next step
+							- "Concern" requires explicit teacher's explanation of WHY something is problematic
 							- "Value" requires recognition of a specific skill or strategy (not just "good job")
-							- Probing questions without judgment typically = 230	
 						</key distinguishers>		
 						<disambiguation hierarchy>			
 							When multiple [options] seem possible, apply these rules in order:
@@ -184,7 +183,7 @@
 						<default rule>  
 							If ambiguous between correction and probing, choose 230.
 						<default rule>  		
-					`,	
+					`,
 		options: options
 		};
 
