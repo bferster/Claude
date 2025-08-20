@@ -28,15 +28,14 @@
 <body>
 	<img style="position:absolute; top:-8vh;left:-10.5%; width:8%" src="img/agilelogo.png">
 	<select id="model" class="is">
+		<option>gpt-5-mini</option>		
 		<option>gpt-5-nano</option>		
 		<option>gpt-5</option>		
-		<option>gpt-5-mini</option>		
 		<option>claude-sonnet-4-20250514</option>
 		<option>claude-opus-4-20250514</option>
 		<option>claude-3-haiku-20240307</option> 
 	</select> &nbsp; 
 	<select id="intent" class="is">
-		<option>110</option>		
 		<option>110</option>		
 		<option>120</option>		
 		<option>130</option>		
@@ -59,7 +58,13 @@
 		<option>400</option>		
 		<option>300</option>		
 		<option>200</option>		
-	</select> &nbsp; <button id="addremark" class="bs">Add</button> &nbsp; <button id="auto" class="bs">Auto</button>&nbsp; -> <div style="display:inline-block" id="intentNum"></div>
+	</select> &nbsp; 	
+	<select id="skip" class="is">
+		<option>1</option>		
+		<option>2</option>		
+		<option>3</option>		
+		<option>4</option>		
+	</select> &nbsp; 	<button id="addremark" class="bs">Add</button> &nbsp; <button id="auto" class="bs">Auto</button>&nbsp; -> <div style="display:inline-block" id="intentNum"></div>
 	<br><br>
 	<input id="input"  style="width:70%;padding:8px;" type="text">&nbsp; 
 	<button id="send" class="bs">Send</button>
@@ -107,6 +112,7 @@
 
 	$("#auto").on("click",(e)=>	{ 
 		inAuto=!inAuto;
+		skipper=$("#skip").val()-0;
 		if (!inAuto) {
 			let tens=0;hundreds=0,time=0,num=0;
 			let i,o;
@@ -123,9 +129,9 @@
 				}
 			let str=Papa.unparse(responses,{ header:true, skipEmptyLines:true, columns:fields  });			
 			SaveTextAsFile(prompt.model+".csv", str);
-			
+			++num;
 			trace("100s="+(Math.round(hundreds/num*100))+"%",hundreds,num);
-			trace("10s="+(Math.round(tens/num*100))+"%",tens,num); 
+			trace("10s="+(Math.round(tens/num*100))+"%",tens); 
 			trace("time="+Math.round(time/num));
 			}
 		else{
@@ -179,7 +185,8 @@
 			responses[responses.length-1].time=time;
 			responses[responses.length-1].intent=data.R;
 			s+="<b>Intent is: "+data.R+"</b><br>";
-			$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
+				$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
+			trace(responses[responses.length-1]);
 			$("#prompt").on("click",()=>{
 				s=d.content.replace(/</g," [");
 				s=s.replace(/>/g,"] ");
@@ -190,7 +197,7 @@
 			LoadingIcon();
 			if (inAuto)	{
 				if (responses.length > (remarks.length-1)/skipper) 	$("#auto").trigger("click");
-				else if (curIntent > $("#endintent").val()) 		$("#auto").trigger("click");
+				else if (curIntent > $("#endintent").val()-0) 		$("#auto").trigger("click");
 				setTimeout(()=>{
 					$("#addremark").trigger("click");
 					$("#send").trigger("click");
