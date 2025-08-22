@@ -114,8 +114,6 @@
 	$("#auto").on("click",(e)=>	{ 
 		inAuto=!inAuto;
 		skipper=$("#skip").val()-0;
-	//	curRemark=$("#intent").val();
-
 		if (!inAuto) {
 			let tens=0;hundreds=0,time=0,num=0;
 			let i,o;
@@ -139,6 +137,7 @@
 			}
 		else{
 			responses=[];
+			$("#intent").trigger("change");
 			$("#addremark").trigger("click");
 			$("#send").trigger("click");
 			}													
@@ -173,9 +172,10 @@
 					}
 				}
 			d.content+="</options>\n";
-	
-			trace($('#why').prop('checked'))
-		d.content+=`Output the numeric intent ID (e.g., 100) or "0".  ${$('#why').prop('checked') ? "Explain why that option was chosen" : "Do NOT output punctuation, extra words, or explanations."}`;
+			if ($('#why').prop('checked')) 
+				d.content+=`Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
+			else	
+				d.content+=`Output the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.}`;
 
 		fetch('http://localhost:3000/api', {
 			method: "POST", 
@@ -189,7 +189,8 @@
 			let s=time+" seconds<br><br>";
 			responses[responses.length-1].time=time;
 			responses[responses.length-1].intent=data.R;
-			s+="<b>Intent is: "+data.R+"</b><br>";
+			s=s.replace(/\n/g,"<br>");
+			s+="Intent is: "+data.R.replace(/\n/g,"<br>")+"<br>";
 				$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
 			trace(responses[responses.length-1]);
 			$("#prompt").on("click",()=>{
