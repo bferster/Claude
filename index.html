@@ -67,7 +67,8 @@
 	</select> &nbsp; 	<button id="addremark" class="bs">Add</button> &nbsp; <button id="auto" class="bs">Auto</button>&nbsp; -> <div style="display:inline-block" id="intentNum"></div>
 	<br><br>
 	<input id="input"  style="width:70%;padding:8px;" type="text">&nbsp; 
-	<button id="send" class="bs">Send</button>
+	<button id="send" class="bs">Send</button>&nbsp; 
+	Why?<input id="why" type="checkbox">
 	<br><br>
 	<div id="output" style="width:70%;padding:8px;border:1px solid;overflow-y:scroll;max-height:60vh"> Response will show up here...</div>
 
@@ -113,6 +114,8 @@
 	$("#auto").on("click",(e)=>	{ 
 		inAuto=!inAuto;
 		skipper=$("#skip").val()-0;
+	//	curRemark=$("#intent").val();
+
 		if (!inAuto) {
 			let tens=0;hundreds=0,time=0,num=0;
 			let i,o;
@@ -170,8 +173,10 @@
 					}
 				}
 			d.content+="</options>\n";
-			
-		
+	
+			trace($('#why').prop('checked'))
+		d.content+=`Output the numeric intent ID (e.g., 100) or "0".  ${$('#why').prop('checked') ? "Explain why that option was chosen" : "Do NOT output punctuation, extra words, or explanations."}`;
+
 		fetch('http://localhost:3000/api', {
 			method: "POST", 
 			headers: { 'Content-Type': 'application/json' },

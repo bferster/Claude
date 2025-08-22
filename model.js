@@ -467,14 +467,12 @@
 						3. Compare the remark to the option definitions in [options] and select the best match.
 						4. If two options are equally plausible, use the disambiguation_hierarchy to pick the higher-priority option.
 						6. If you cannot map the remark to any option, output "0".
-						7. Output exactly one token: the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.
-			<key_distinguishers>
+				<key_distinguishers>
 				• Explicit correction + WHY or strategy → 400  
 				• Explains meaning, probes reasoning, "What in the text…" → 200  
 				• Reflection/transfer/metacognition → 500  
 				• Praise tied to specific strategy/evidence → 300  
 				• Generic/short praise, vague check, restating → 100
-				
 			</key_distinguishers>
 			<disambiguation_hierarchy>
 				1. 400 — Concern & Suggestion
@@ -485,7 +483,7 @@
 			</disambiguation_hierarchy>
 			<default>
 				If teacher say's thank you → 100.
-				</default>
+			</default>
 			
 			`,
 		options: options100s2

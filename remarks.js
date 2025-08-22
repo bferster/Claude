@@ -13,10 +13,6 @@ var remarks=[
   },
   {
     "intent": "110.1",
-    "remark": "Let's, student, let's go back to each for just a minute."
-  },
-  {
-    "intent": "110.1",
     "remark": "There you go."
   },
   {
@@ -53,10 +49,6 @@ var remarks=[
   },
   {
     "intent": "110.1",
-    "remark": "There's something small that they're looking at, it is the water."
-  },
-  {
-    "intent": "110.1",
     "remark": "Good job."
   },
   {
@@ -85,7 +77,11 @@ var remarks=[
   },
   {
     "intent": "110.1",
-    "remark": "Thank you for sharing now Phenomenal."
+    "remark": "Thank you for sharing now."
+  },
+    {
+    "intent": "110.1",
+    "remark": "Phenomenal."
   },
   {
     "intent": "110.1",
@@ -125,10 +121,6 @@ var remarks=[
   },
   {
     "intent": "110.2",
-    "remark": "Well, it definitely helped them because you know in space there's not a lot of oxygen."
-  },
-  {
-    "intent": "110.2",
     "remark": "So, you have to have those tanks to help you breathe."
   },
   {
@@ -145,19 +137,11 @@ var remarks=[
   },
   {
     "intent": "110.2",
-    "remark": "And that's absolutely something that was in that reading."
-  },
-  {
-    "intent": "110.2",
     "remark": "You guys said they use a scientific tool called a microscope, which answers the question."
   },
   {
     "intent": "110.2",
     "remark": "Right?"
-  },
-  {
-    "intent": "110.2",
-    "remark": "And I was thinking, basically what you could do."
   },
   {
     "intent": "110.2",
@@ -221,21 +205,9 @@ var remarks=[
   },
   {
     "intent": "110.3",
-    "remark": "So maybe you can help us teach others since you know."
-  },
-  {
-    "intent": "110.3",
     "remark": "I'm sure they do, and I bet that you could probably tell you more and you can share that information together."
   },
-  {
-    "intent": "110.3",
-    "remark": "Well you know what, because you do know a lot and that means you can help the rest of us out that don't know as much as you."
-  },
-  {
-    "intent": "110.3",
-    "remark": "Or maybe you could see if your classmates, maybe they don't know it, and they need your help."
-  },
-  {
+ {
     "intent": "110.4",
     "remark": "So the machine was the Lunar Orbiter."
   },
@@ -253,19 +225,7 @@ var remarks=[
   },
   {
     "intent": "110.4",
-    "remark": "Equipment is a great word."
-  },
-  {
-    "intent": "110.4",
-    "remark": "Did anybody else put equipment?."
-  },
-  {
-    "intent": "110.4",
     "remark": "It is very heavy."
-  },
-  {
-    "intent": "110.4",
-    "remark": "Going back to your first statement."
   },
   {
     "intent": "120.1",
@@ -297,10 +257,6 @@ var remarks=[
   },
   {
     "intent": "120.2",
-    "remark": "All right, so the question was 'what equipment did scientists use to discover water on the moon?'"
-  },
-  {
-    "intent": "120.2",
     "remark": "We're trying to figure out what equipment did scientists use to discover the water on the moon?"
   },
   {
@@ -309,7 +265,7 @@ var remarks=[
   },
   {
     "intent": "120.2",
-    "remark": "Reach Every Reader: Oh, no, no, it talks about the craters not the equipment So we need to find the equipment that they used"
+    "remark": "Oh, no, no, it talks about the craters not the equipment, so we need to find the equipment that they used"
   },
   {
     "intent": "120.3",
@@ -318,10 +274,6 @@ var remarks=[
   {
     "intent": "120.3",
     "remark": "Would you like to read the second paragraph?"
-  },
-  {
-    "intent": "120.3",
-    "remark": "So, if you all would look at paragraph two, it has a two labeled."
   },
   {
     "intent": "120.3",
@@ -381,10 +333,6 @@ var remarks=[
   },
   {
     "intent": "120.4",
-    "remark": "Okay, so what is your answer to the discussion question?"
-  },
-  {
-    "intent": "120.4",
     "remark": "Does anyone want to raise their hand and tell me what they think the action word is?"
   },
   {
@@ -397,10 +345,6 @@ var remarks=[
   },
   {
     "intent": "130.1",
-    "remark": "They used the lunar orbiterand the microscope to find the craters full of water."
-  },
-  {
-    "intent": "130.1",
     "remark": "You're both partially right."
   },
   {
@@ -409,11 +353,7 @@ var remarks=[
   },
   {
     "intent": "130.2",
-    "remark": "I wonder, maybe you can help us out because I sent him on this mission to find this answer."
-  },
-  {
-    "intent": "130.2",
-    "remark": "student, I want you to find the name of the machine for us."
+    "remark": "Student, I want you to find the name of the machine for us."
   },
   {
     "intent": "130.2",
@@ -461,10 +401,6 @@ var remarks=[
   },
   {
     "intent": "130.2",
-    "remark": "Or did anyone else find anything different?"
-  },
-  {
-    "intent": "130.2",
     "remark": "With a partner read the text again and see if you can find the answer."
   },
   {
@@ -482,22 +418,6 @@ var remarks=[
   {
     "intent": "130.3",
     "remark": "In the first sentence, it actually says that NASA sent a small machine called a lunar orbiter to investigate."
-  },
-  {
-    "intent": "130.3",
-    "remark": "This lunar orbiter looks for ice deposits in a large polar crater.\""
-  },
-  {
-    "intent": "130.3",
-    "remark": "So, this is the machine that actually went and explored."
-  },
-  {
-    "intent": "130.3",
-    "remark": "They didn't really use a microscope to find the water."
-  },
-  {
-    "intent": "130.3",
-    "remark": "The water was located underneath the ground."
   },
   {
     "intent": "130.3",
@@ -528,10 +448,6 @@ var remarks=[
     "remark": "But I do think based on paragraph five, whenever it talks about using the oxygen in the hydrogen and breaking it up to use it for a different things."
   },
   {
-    "intent": "130.3",
-    "remark": "I think that is very valuable."
-  },
-  {
     "intent": "140.1",
     "remark": "You went to NASA?"
   },
@@ -558,14 +474,6 @@ var remarks=[
   {
     "intent": "140.1",
     "remark": "Did you like using the microscope in science class?"
-  },
-  {
-    "intent": "140.1",
-    "remark": "When you deposit something, how much do you deposit?"
-  },
-  {
-    "intent": "140.1",
-    "remark": "Do you have to deposit a really large piece of something or smaller pieces?"
   },
   {
     "intent": "140.1",
@@ -613,11 +521,7 @@ var remarks=[
   },
   {
     "intent": "150.1",
-    "remark": "Wwhat else do you think?"
-  },
-  {
-    "intent": "150.1",
-    "remark": "That'd be a great strategy to use, do you agree with his strategy."
+    "remark": "What else do you think?"
   },
   {
     "intent": "150.1",
@@ -637,19 +541,11 @@ var remarks=[
   },
   {
     "intent": "150.1",
-    "remark": "But can you look back in the reading and can you tell me what it says about that because I think if we use our brain just for a little bit and we read that reading, you're going to have all those same answers about the water too."
-  },
-  {
-    "intent": "150.1",
     "remark": "Okay, well, we're just going to work on making sure we have the best answer for the question."
   },
   {
     "intent": "150.1",
     "remark": "That's you feel like you know everything that there is to know about space, but there is always more that we can learn and maybe by listening to our friend's answer is we can learn even more."
-  },
-  {
-    "intent": "150.1",
-    "remark": "Well, guess what we're going to learn some new things today."
   },
   {
     "intent": "150.1",
@@ -661,11 +557,7 @@ var remarks=[
   },
   {
     "intent": "150.1",
-    "remark": "And that's really cool that you're interested in it, but we can always learn new names for machinery and things like that."
-  },
-  {
-    "intent": "150.1",
-    "remark": "So that's why we read this passage together in hopes that you would learn more."
+    "remark": "And that's really cool that you're interested in it."
   },
   {
     "intent": "150.1",
