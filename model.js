@@ -133,7 +133,7 @@
 					"That explanation mixes up cause and effect."]
 			},
 			
-		{ intent:420, category:"Concern & Suggestion", description:" Provides a suggestion  for how to improve student response",
+		{ intent:420, category:"Concern & Suggestion", description:"Provides a suggestion  for how to improve student response",
 				information: "Teacher shares suggestions for how to think through a more complete understanding.",
 				definitions:[ 
 					"Provides suggestion to improve student understanding of the question.",
@@ -238,9 +238,8 @@
 				},
 				
 		{intent:200, category:"Explain & Clarify", description:"Teacher explanations of text, question, responses, and purpose of the group",
-				information: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson. What the teacher is doing the thinking and not sharing the thinking so the student is not given a reason why or purpose underlying the teacher’s explanation or prompt.",
+				information: "Teacher explains the text or question with or without reference to the text. The teacher prompts students to think about why their response is incorrect without engaging students with the text. The teacher explains the purpose for the small group lesson.",
 				definitions:["Provides explanation of the question without a reference to the text", 
-					"Teacher provides non-text support for students to understand the question.",					
 					"Teacher may build background knowledge, schema, or explain other elements necessary to understanding the question.",
 					"Teacher explains the prompt by defining terms in the question.",
 					"Teacher asks a question or makes a statement with the purpose of increasing student understanding of why their response is incorrect or incomplete, but it does not  require the use of text. It could be building background knowledge without text evidence.",
@@ -251,11 +250,8 @@
 					"Teacher Sets purpose for group",
 					"Teacher explains why students are engaging in the task or communicates the thinking objective.",
 					"Teacher elaborates more than just restating the question",
-					"Teacher Sets purpose for group",
-					"Teacher explains why students are engaging in the task or communicates the thinking objective.",
-					"Teacher elaborates more than just restating the question",
 					"Teacher probes student thinking without judgment",
-					"Teacher asks questions to understand student reasoning",
+					"Teacher asks question to understand student reasoning",
 					"Teacher probes their thinking process without making evaluative statements",
 					], 
 				examples:[  
@@ -284,8 +280,8 @@
 
 
 
-		{intent:400, category:"Concern & Suggestion", description:"Identifies specific concern with student response",
-				information: "Teacher shares a specific concern with a portion of a student response. This brings to attention a student’s specific thinking strategy that led to misunderstanding and supports students in being able to apply stronger thinking to other tasks.",
+		{intent:400, category:"Concern & Suggestion", description:"Identifies specific concern with student response. Provides a suggestion  for how to improve student response",
+				information: "Teacher shares a specific concern with a portion of a student response. This brings to attention a student’s specific thinking strategy that led to misunderstanding and supports students in being able to apply stronger thinking to other tasks. Teacher shares suggestions for how to think through a more complete understanding.",
 				definitions:[ 
 					"Teacher expresses a concern about student’s understanding of the question",
 					"Teacher explicitly tells the student WHY their understanding of the question is incorrect",
@@ -305,11 +301,12 @@
 					"That explanation mixes up cause and effect.",
 					"Try looking back at the second paragraph for evidence.",
 					"Use transition words to make your answer clearer.",
+					"Try looking back at the second paragraph for evidence.",
+					"Use transition words to make your answer clearer.",
 					"Your answer only explains what happened, not why. Try adding a sentence that shows the cause.",
 					]
 			},
 			
-
 
 
 		{ intent:500, category:"Learning Beyond Current Task", description:"Metacognition, transfer, and generalization",

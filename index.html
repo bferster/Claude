@@ -30,11 +30,11 @@
 	<select id="model" class="is">
 		<option>gpt-5-mini</option>		
 		<option>gpt-5-nano</option>		
-		<option>gpt-5</option>		
+		<option>gpt-5</option>	
 		<option>claude-sonnet-4-20250514</option>
 		<option>claude-opus-4-20250514</option>
 		<option>claude-3-haiku-20240307</option> 
-	</select> &nbsp; 
+		</select> &nbsp; 
 	<select id="intent" class="is">
 		<option>110</option>		
 		<option>120</option>		
@@ -132,7 +132,7 @@
 			SaveTextAsFile(prompt.model+".csv", str);
 			++num;
 			trace("100s="+(Math.round(hundreds/num*100))+"%",hundreds,num);
-			trace("10s="+(Math.round(tens/num*100))+"%",tens); 
+//			trace("10s="+(Math.round(tens/num*100))+"%",tens); 
 			trace("time="+Math.round(time/num));
 			}
 		else{
@@ -147,7 +147,7 @@
 
 	function sendJsonData(remark)
 	{
-		let i,j;
+		let i,j,k;
 		responses.push({time:0, target:curIntent, intent:0, remark:curQuestion });		
 		LoadingIcon(true);
 		d.role=prompt.role;			d.tokens=prompt.tokens; 		d.instructions=prompt.instructions; 
@@ -155,27 +155,32 @@
 		d.remark=`remark>Teacher said: ${remark}</remark>\n`;
 		d.content=`<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n`;
 		d.content+="<options>\n";
-		for (i=0;i<prompt.options.length;++i) {
-				d.content+="<op"+i+"><intent>"+prompt.options[i].intent+"</intent>";
+		d.content+=JSON.stringify(prompt.options)
+/*		for (i=0;i<prompt.options.length;++i) {
+				k=(i+1)*100
+				d.content+="<op"+k+"><intent>"+prompt.options[i].intent+"</intent>";
 				d.content+="<category>"+prompt.options[i].category+"</category>\n";
 				d.content+="<description>"+prompt.options[i].description+"</description>\n";
 				d.content+="<information>"+prompt.options[i].information+"</information>\n";
 				d.content+="<definitions>\n";
 				for (j=0;j<prompt.options[i].definitions.length;++j) 
 					d.content+="- "+prompt.options[i].definitions[j]+"\n";
-				d.content+="</definitions>\n</op"+i+">\n";
+				d.content+="</definitions>\n";
 				if (prompt.options[i].examples) {
 					d.content+="<examples>\n";
 						for (j=0;j<prompt.options[i].examples.length;++j) 
 						d.content+="- "+prompt.options[i].examples[j]+"\n";				
-					d.content+="</examples>\n</op"+i+">\n\n";
+					d.content+="</examples>\n</op"+k+">\n\n";
 					}
 				}
-			d.content+="</options>\n";
-			if ($('#why').prop('checked')) 
-				d.content+=`Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
+*/		d.content+="</options>\n";
+		d.content+=`<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n`;
+		if ($('#why').prop('checked')) 
+			d.content+=`Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
 			else	
 				d.content+=`Output the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.}`;
+
+
 
 		fetch('http://localhost:3000/api', {
 			method: "POST", 
@@ -191,7 +196,7 @@
 			responses[responses.length-1].intent=data.R;
 			s=s.replace(/\n/g,"<br>");
 			s+="Intent is: "+data.R.replace(/\n/g,"<br>")+"<br>";
-				$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
+			$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
 			trace(responses[responses.length-1]);
 			$("#prompt").on("click",()=>{
 				s=d.content.replace(/</g," [");
@@ -207,7 +212,7 @@
 				setTimeout(()=>{
 					$("#addremark").trigger("click");
 					$("#send").trigger("click");
-					},1500);
+					},2500);
 			}
 		});
 
