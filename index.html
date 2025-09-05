@@ -66,11 +66,14 @@
 		<option>4</option>		
 	</select> &nbsp; 	<button id="addremark" class="bs">Add</button> &nbsp; <button id="auto" class="bs">Auto</button>&nbsp; -> <div style="display:inline-block" id="intentNum"></div>
 	<br><br>
-	<input id="input"  style="width:70%;padding:8px;" type="text">&nbsp; 
+	<input id="input"  style="width:70%;padding:8px;" type="text" placeholder="Type remark here or use microphone -> to talk">&nbsp; 
+	<img id="talkBut" src="img/talkbut.png" style="cursor:pointer;width:48px;margin-left:-50px;vertical-align:-6px" title="Click and hold to talk">
 	<button id="send" class="bs">Send</button>&nbsp; 
 	Why?<input id="why" type="checkbox">
 	<br><br>
 	<div id="output" style="width:70%;padding:8px;border:1px solid;overflow-y:scroll;max-height:60vh"> Response will show up here...</div>
+	<br><div id="promptSpan"></div>
+
 
 <script>
 
@@ -78,6 +81,7 @@
 // MAIN 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
+	var app={ said:"" };
 	var d={};
 	var timeStart,inAuto=false;
 	var curRemark=0,curIntent=0,curQuestion="";
@@ -145,6 +149,23 @@
 
 	$("#input")[0].addEventListener('keydown', function(e) { if (e.key === 'Enter') $("#send").trigger("click") });
 
+	$("#talkBut").on("mousedown", () => {													// ON TALK BUTTON
+		$("#talkBut").prop("src","img/intalkbut.png");											// Green button
+		app.said="";																			// Clear spoken cache
+		app.voice.Listen()																		// Turn on speech recognition
+		app.inRemark=true;																		// Teacher is talking
+		});
+	$("#talkBut").on("mouseup", (e) => {														// ON TALK BUTTON UP
+		app.voice.StopListening();																// STT off						
+		$("#talkBut").prop("src","img/talkbut.png");											// Green button
+		$("#promptSpan").fadeIn(200).delay(4000).fadeOut(1000,()=>{ $("#promptSpan").html("") }).fadeIn(200);		// Animate in and out
+		app.inRemark=false;																	// Teacher is not talking
+		});
+
+
+
+
+
 	function sendJsonData(remark)
 	{
 		let i,j,k;
@@ -152,7 +173,7 @@
 		LoadingIcon(true);
 		d.role=prompt.role;			d.tokens=prompt.tokens; 		d.instructions=prompt.instructions; 
 		d.model=prompt.model; 		d.system=prompt.system;			d.temperature=prompt.temperature;
-		d.remark=`remark>Teacher said: ${remark}</remark>\n`;
+		d.remark=`<remark>Teacher said: ${remark}</remark>\n`;
 		d.content=`<objective>${prompt.objective}</objective>\n<instructions>${prompt.instructions}</instructions>\n`;
 		d.content+="<options>\n";
 		d.content+=JSON.stringify(prompt.options)
@@ -181,7 +202,6 @@
 				d.content+=`Output the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.}`;
 
 
-
 		fetch('http://localhost:3000/api', {
 			method: "POST", 
 			headers: { 'Content-Type': 'application/json' },
@@ -194,6 +214,7 @@
 			let s=time+" seconds<br><br>";
 			responses[responses.length-1].time=time;
 			responses[responses.length-1].intent=data.R;
+			responses[responses.length-1].remark=d.remark;
 			s=s.replace(/\n/g,"<br>");
 			s+="Intent is: "+data.R.replace(/\n/g,"<br>")+"<br>";
 			$("#output").html(s+`<button id="prompt" class="bs" style="float:right">Show prompt</button>`);
@@ -217,6 +238,112 @@
 		});
 
 	}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// VOICE (SST / TTS(
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Voice {																				 
+
+	constructor()																					// CONSTRUCTOR
+	{
+		let i,_this=this;
+		this.listening=false;																			// Recognizing flag
+		this.getLastClause=false;																		// Get last clause																
+		this.hasRecognition=false;																		// Assume no STT
+		this.thoughtBubbles=false;																		// Flag to show thought bubbles instead of TTS
+		app.voice=this;
+		try {																							// Try
+			this.tts=new SpeechSynthesisUtterance();													// Init TTS
+			this.mac=0;																					// Assume non-mac
+			if (window.navigator.userAgentData)															// Exists?
+				this.mac=window.navigator.userAgentData.platform != "Windows";							// A mac?
+			this.femaleVoice=this.mac ? 0 : 1;															// Female voice
+			this.maleVoice=this.mac ? 1 : 0;															// Male voice
+ 			this.talking=0;																				// Talking flag to move mouth
+			this.voices=[];																				// New array
+			speechSynthesis.onvoiceschanged=()=> {														// React to voice init
+				this.voices=[];																			// Clear list
+				speechSynthesis.getVoices().forEach(function(voice) {									// For each voice
+					if (voice.lang == "en-US")						_this.voices.push(voice);			// Just look at English
+					if (voice.name == "Google UK English Female")	_this.voices.push(voice),_this.instructorVoice=_this.voices.length-1;		// Instructor's voice for all
+					if (voice.name.match(/Microsoft Mark/i))		_this.voices.push(voice),_this.maleVoice=_this.voices.length-1;				// Male voice for PC
+					if (voice.name == "Google US English")			_this.voices.push(voice),_this.femaleVoice=_this.voices.length-1;			// Female voice for all
+					if (voice.name.match(/Alex/i))					_this.voices.push(voice),_this.maleVoice=_this.voices.length-1;				// Male voice ofr
+					if (voice.name.match(/Aaron/i))					_this.voices.push(voice),_this.maleVoice=_this.voices.length-1;				// Mac male voice
+					});
+				};
+			this.tts.onend=()=> { 																		// ON TALKING END
+				this.talking=0;  																		// Stop talking animation
+				};	
+		} catch(e) { trace("TTS error",e) };															// On error
+		
+		try {																							// Try
+			var SpeechRecognition=SpeechRecognition || webkitSpeechRecognition;							// Browser compatibility
+			this.recognition=new SpeechRecognition();													// Init STT
+			this.recognition.continuous=true;															// Continual recognition off
+			this.recognition.interimResults=true;														// Return interim results?
+			this.recognition.lang="en-US";																// US English
+			this.recognition.onstart=()=>{ this.started=true; };										// ON STT START SET STATUS FLAG
+			this.recognition.onend=()=>  { this.started=false; if (this.listening) this.Listen() };		// ON STT END RE-LISTEN	IF IN SIM											
+			this.hasRecognition=true;																	// Has speechRecognition capabilities														
+			
+			this.recognition.onresult=(e)=>{ 															// ON RECOGNITION
+				for (i=e.resultIndex; i<e.results.length;++i) 											// For each result
+					if (e.results[i].isFinal) {															// If final
+						app.said+=e.results[i][0].transcript;											// Add to cache
+						$("#promptSpan").html(app.said ? "<span style='color:#006600'>"+app.said+"</span>" : ""); // Show portion to teacher as green
+						if (this.getLastClause) {														// Get final utterance
+							$("#input").val(app.said);													// Add to tine
+							$("#send").trigger("click");												// Send
+							app.said=""; 																// Clear cache
+							this.listening=false;														// Not listening anymore
+							this.getLastClause=false;													// No last phrase anymore
+							this.recognition.stop(); 													// Stop recognition
+							}
+						}
+				else $("#promptSpan").html(e.results[0][0].transcript ? app.said+e.results[0][0].transcript+" " : e.results[0][0].transcript+" "); // Show portion to teacher
+				}					
+			} catch(e) { trace("Voice error",e) };														// On error
+		}
+
+	Listen()																						// TURN ON SPEECH RECOGNITION
+	{
+		try { 
+			this.getLastClause=false;																	// Get last phrase when transcribed
+			if (!this.started)	this.recognition.start(); 												// Start recognition, unless already started
+			this.listening=true;																		// We're listening
+		} catch(e) { trace("Voice error",e) };															// On error
+	}
+
+	StopListening()																					// TURN OFF SPEECH RECOGNITION
+	{
+		this.getLastClause=true;																		// Get last phrase when transcribed
+	}
+
+	Talk(text, who="teacher")																			// SAY SOMETHING
+	{
+		if (!text)	return;																				// Nothing to say
+		text=text.replace(/\{.*?\}/g,"");																// Remove any braced text
+		try{																							// Try
+			speechSynthesis.cancel();																	// Clear current speech queue			
+			if (who == "Teacher") 		this.tts.voice=this.voices[this.instructorVoice];				// Instructor's  voice
+			else if (who == "male")		this.tts.voice=this.voices[this.maleVoice];						// Set male voice
+			else if (who == "female") 	this.tts.voice=this.voices[this.femaleVoice];					// Set female voice
+			this.tts.rate=1.1;																			// Set voice speed rate 
+			this.tts.text=text;																			// Set text
+			speechSynthesis.speak(this.tts);															// Speak
+		}
+		catch(e) { trace("Speech error",e) };															// Catch
+	}
+
+
+}  // VOICE CLOSURE
+
+	app.voice= new Voice();
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // HELPERS 
@@ -277,8 +404,6 @@ function SaveTextAsFile(file, contents)															// SAVE TEXT TO LOCAL FILE
 
 function GetTextBox(title, content, def, callback)												// GET TEXT LINE BOX
 	{
-		
-		
 		$("#confirmBoxDiv").remove();																	// Remove 
 		$("body").append("<div class='lz-confirm' id='confirmBoxDiv'></div>");							// Add box								
 		var str="<img src='img/smlogo.png' width='64' style='vertical-align:-8px'/>&nbsp;&nbsp;";								
@@ -293,7 +418,6 @@ function GetTextBox(title, content, def, callback)												// GET TEXT LINE B
 		$("#dialogOK").on("click", function() {	callback($("#gtBoxTt").val()); $("#confirmBoxDiv").remove(); });	// ON OK 
 		$("#dialogCancel").on("click", function() {	$("#confirmBoxDiv").remove(); });								// ON CANCEL
 		}
-
 
 
 </script>

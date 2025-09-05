@@ -266,7 +266,7 @@
 				},	
 
 		{intent:300, category:"Value", description:"Values student thinking",
-				information: "Teacher expresses value for a specific element of a student’s response that is related to a reading or thinking skill. Tis is not generic praise. Remark needs to be supportive of high-quality and complete responses. The teacher works toward meeting students where they are with their emergent thinking",
+				information: "Teacher expresses value for a specific element of a student’s response that is related to a reading or thinking skill. This is not generic praise. Remark needs to be supportive of high-quality and complete responses. The teacher works toward meeting students where they are with their emergent thinking",
 				definitions:[ 
 					"Affirms student by recognizing their perspective",
 					"Teacher affirms student for their use of text",
