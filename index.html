@@ -66,7 +66,7 @@
 		<option>4</option>		
 	</select> &nbsp; 	<button id="addremark" class="bs">Add</button> &nbsp; <button id="auto" class="bs">Auto</button>&nbsp; -> <div style="display:inline-block" id="intentNum"></div>
 	<br><br>
-	<input id="input"  style="width:70%;padding:8px;" type="text" placeholder="Type remark here or use microphone -> to talk">&nbsp; 
+	<input id="input"  style="width:calc(70% - 32px);padding:8px;padding-right:40px" type="text" placeholder="Type remark here or use microphone -> to talk">&nbsp; 
 	<img id="talkBut" src="img/talkbut.png" style="cursor:pointer;width:48px;margin-left:-50px;vertical-align:-6px" title="Click and hold to talk">
 	<button id="send" class="bs">Send</button>&nbsp; 
 	Why?<input id="why" type="checkbox">
@@ -182,7 +182,7 @@
 				d.content+="<op"+k+"><intent>"+prompt.options[i].intent+"</intent>";
 				d.content+="<category>"+prompt.options[i].category+"</category>\n";
 				d.content+="<description>"+prompt.options[i].description+"</description>\n";
-				d.content+="<information>"+prompt.options[i].information+"</information>\n";
+				d.content+="<title>"+prompt.options[i].information+"</information>\n";
 				d.content+="<definitions>\n";
 				for (j=0;j<prompt.options[i].definitions.length;++j) 
 					d.content+="- "+prompt.options[i].definitions[j]+"\n";
@@ -199,7 +199,7 @@
 		if ($('#why').prop('checked')) 
 			d.content+=`Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
 			else	
-				d.content+=`Output the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.}`;
+				d.content+=`Output only the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.}`;
 
 
 		fetch('http://localhost:3000/api', {

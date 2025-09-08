@@ -369,23 +369,11 @@
 		},
 		{
 		"intent": 200,
-		"category": "Explain & Clarify",
-		"description": "Teacher explanation of text, question, or task",
-		"information": "Teacher provides explanation, background, or clarification to help students understand the text, question, or purpose. May probe student reasoning without evaluative judgment.",
+		"category": "Clarify",
+		"description": "Teacher asks student a question to understand thinking or knowledge.",
 		"definitions": [
-			"Explains question or terms (with or without text reference).",
-			"Builds background knowledge or schema needed to understand.",
-			"Explains meaning of a passage without student engagement.",
-			"Sets or explains purpose for the task or group.",
-			"Asks clarifying questions to probe reasoning or thinking.",
-			"Connects the task/text to students’ background knowledge.",
-			"Summarizes learning or provides a check for understanding."],
+			"Asks clarifying questions to probe reasoning or thinking."],
 		"examples": [
-			"This word means machine.",
-			"The question is really asking you to compare two things.",
-			"The purpose of our group today is to practice identifying themes.",
-			"We’re practicing how to use evidence because it helps us explain our thinking.",
-			"Today we’re focusing on making connections between events.",
 			"What in the text makes you think that?",
 			"Can you explain how you figured that out?"
 			]
@@ -449,6 +437,135 @@
 			]
 		}
 	];
+
+	var options100s3=[ 
+		{
+		intent: 100,
+		category: "Low Impact",
+		title:"Teacher says a statement that has low impact on student learning.",
+		description: "Teacher statement is incorrect, vague, simply repeats the student's response or doesn't build on the meaning of the student's response. A teacher might give a compliment to an incorrect student response or a correction with out referencing how the student got to the incorrect response. A teacher may also give a compliment to a correct response without providing any reference to their thinking process.  This type of feedback has low impact on student learning, low transfer to other tasks, and provides low information to students about their thinking.  This doesn't enhance student thinking or understanding of the text or task.",
+		definitions: [
+			"Teacher acknowledges but does not engage with response.", 
+			"Teacher restates student response.",
+			"Teacher acknowledges that student was “close” to the correct answer, but does not provide additional feedback.",
+			"Teacher acknowledges a student contribution not related to the question or text.",
+			"Teacher treats partial understandings as valid interpretations of text.",
+			"Teacher asks or repeats a correct student response with no information.",
+			"Teacher asks to re-read or re-try without direction or additional support.",
+			"Teacher provides a low information correction.",
+			"Teacher provides a low information check for understanding."
+			],
+		"examples": [
+			"Nice job.",
+			"That's correct.",
+			"This is what you said: _____.",
+			"You’re close, but not quite there.",
+			"I appreciate all of you guys volunteered to read.",
+			"You weren't exactly wrong.",
+			"Equipment is a great word. Did anybody else put equipment.",
+			"I want you to read over that for a minute and see if anything sticks out.",
+			"The question asks: _____.",
+			"Can you re-read the question.",
+			"Can you read your response again.",
+			"She never learned to read and write.",
+			"Does that make sense?"
+			]	
+		},
+		{
+		intent: 200,
+		category: "Clarify",
+		title:"Teacher asks clarifying question",
+		description:"Teacher probes for more information about how a student reached their answer. This begins to draw out the source of student understanding or misunderstanding.This can help a teacher determine whether misunderstanding was a result of (1) misunderstanding the question, (2) misunderstanding the text, (3) missing a foundational skill, and/or (4) misapplying background knowledge.",
+		definitions: [
+			"Teacher asks a follow-up question to help students elaborate on their response without an explicit reference to the text/question.",
+			"Teacher asks a follow-up question to help students elaborate their response in relationship to the text or image.",
+			"Teacher asks students to clarify what necessary criteria they have included in their response and/or what is still missing fro mtheir response.",
+			"Teacher asks  about prior knowledge."	
+			],
+		"examples": [
+			"Why do you say that.",
+			"Can you tell me more",
+			"How did you get that answer", 
+			"What in the text makes you think that",
+			"What do you mean by ___",
+			"What did you see in the image that makes you say that.",
+			"What qualities do you already have in your response.",
+			"What are you missing from your answer.",
+			"What do you know about how this person used literacy in her work.",
+			"What facts do you know about this: ___"
+			]
+					},
+		{
+		intent: 300,
+		category: "Reflect",
+		title:"Teacher reflects on student thinking",
+		description: "Teacher restates or summarizes student thinking in attempt to understand or support student comprehension.",
+		definitions: [
+			"Teacher repeats, restates, or summarizes student thinking and teacher reflects the understanding back to the student for confirmation.  Reflect remarks usually start with the word: 'you.'",
+			"Teacher recognizes that students are using background knowledge from personal expereinces or class content to inform their response."
+			],
+		examples: [
+			"You identified how she used literacy.",
+			"You identified evidence of the literacy tool of symbolism.",
+			"You are making a connection between knitting and abiity to produce.",
+			"You're noticing lots of details in the portrait.",
+			"You’re bringing in your background experiences.",
+			"You're drawing on your prior learning.",
+			"You are applying your past knowledge"
+			]
+		},
+		{
+		intent: 400,
+		category: "Cultivate",
+		title: "Teacher supports student thinking to achieve learning goal",
+		description: "Teacher prompts students to find new information or strategies that move toward the next learning goal.  Teachers may provide examples and information, model specific analytical skills, examine details, and redirect thinking. Teachers will direct students to use learning resources such as fact sheets, word walls, vocab cards, etc.  Teachers may also ask specific questions to direct student looking when redirecting them back to the text or image.",
+		definitions: [
+			"Explore: Teachers prompt students to connect ideas, question assumptions, look more closely, view from new perspectives, and draw on prior knowledge. Exploration deepens and broadens responses, fosters curiosity, and leads students beyond initial thinking.",
+			"Redirect: When responses contain errors or tangents, teachers use redirect prompts to refocus on the learning goal.  Teacher may explicitly tell the student WHY their understanding of the text is incorrect and provide a strategy or clear action step to improve understanding.",
+			"Analyze: When answers lack reasoning, teachers prompt analysis. These prompts invite students to examine details, verify facts, generate new questions, or compare ideas with prior learning. Teachers may provide resources (e.g., maps, timelines, fact sheets) or sentence frames using connectors such as because, however, unless, or even so.",
+			"Teacher asks students to use resources such as fact sheets, vocab cards, etc. to enhance their response.",
+			"Teacher asks students to use sentence frames to make their responses more complete",
+			"Teacher asks students to annotate or circle in the text or image.",
+			"Synthesize: When ideas are numerous or complex, teachers prompt synthesis. Students organize thinking into frameworks that reveal trends, concepts, or larger questions. Teachers look for cohesive responses."				
+			],
+		examples: [
+			"What other questions do you have.", 
+			"Tell me more about how this connects to: ____",
+			"What details here show ...communicatin: ____",
+			"Let's look again to find more evidence.",
+			"What else can you tell me about: ____",
+			"Let’s focus on what we know.",
+			"Let’s move in a different direction",
+			"Let’s compare: _____",
+			"Let’s weigh the pros and cons.",
+			"Let's look at the fact cards to learn more.",
+			"Can you read the definitions of literacy and symbolism on the vocab cards.",
+			"Let's use the vocab cards to understand the definitions of literacy and symbolism.",
+			"Let’s use the sentence frame on the board to make a more complete response to the question.",
+			"Let’s circle the details that she used to communicate ideas about her life."
+			]
+		},
+		{
+		intent:"Extend",
+		category: "Task Specific",
+		title: "Teacher prompts student for metacognition for thinking",
+		description: "The teacher asks students to think about and explain their thinking. These prompts promote metacognition. The student is being asked to think about how they would apply what they learned here to another activity, or to think about how their response changed from the beginning to the end, Prompt students to summarize, generalize, or transfer their learning to new contexts and tasks.",
+		definitions: [
+			"The teacher asks students to think about and explain their thinking. These prompts promote metacognition. The student is being asked to think about how they would apply what they learned here to another activity, or to think about how their response changed from the beginning to the end, Prompt students to summarize, generalize, or transfer their learning to new contexts and tasks.", 
+			"Summarize: Teacher asks student to take all of what student said and shorten it to 1 or 2 sentences.",
+			"Teacher asks student to analyze how answer changed from their first response to the final response following feedback.",
+			"Transfer: Teacher asks student to explain how you will apply the strategies and processes used in this activity to learning process in another activity."
+			],
+		examples: [
+			"Summarize by putting it all together in a sentence or two.",
+			"Explain how your answer changed from when we started to now.",
+			"Explain what you did to improve your answer.",
+			"How did your answer change.",
+			"Explain what you can do next time you get a question like this."
+			]
+		}];
+
+
 		
 	var prompt={
 		tokens: 4096,
@@ -472,18 +589,18 @@
 				• Generic/short praise, vague check, restating → 100
 			</key_distinguishers>
 			<disambiguation_hierarchy>
-				1. 400 — Concern & Suggestion
-				2. 200 — Explain & Clarify
-				3. 500 — Learning Beyond Current Task
-				4. 300 — Value
-				5. 100 — Task Specific / Low-information compliment
+				1. 400 — Cultivate
+				2. 200 — Clarify
+				3. 500 — Extend
+				4. 300 — Reflect
+				5. 100 — Low Impact
 			</disambiguation_hierarchy>
 			<default>
 				If teacher say's thank you → 100.
 			</default>
 			
 			`,
-		options: options100s2
+		options: options100s3
 		};
 
 	
