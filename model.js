@@ -438,7 +438,7 @@
 		}
 	];
 
-	var options100s3=[ 
+	var options=[ 
 		{
 		intent: 100,
 		category: "Low Impact",
@@ -501,8 +501,8 @@
 		title:"Teacher reflects on student thinking",
 		description: "Teacher restates or summarizes student thinking in attempt to understand or support student comprehension.",
 		definitions: [
-			"Teacher repeats, restates, or summarizes student thinking and teacher reflects the understanding back to the student for confirmation.  Reflect remarks usually start with the word: 'you.'",
-			"Teacher recognizes that students are using background knowledge from personal expereinces or class content to inform their response."
+			"Teacher repeats, restates, praises, or summarizes student thinking and teacher reflects the understanding back to the student for confirmation.  Reflect remarks usually start with the word: 'you.'",
+			"Teacher recognizes that students are using background knowledge from personal expereinces or class content to inform their response.",
 			],
 		examples: [
 			"You identified how she used literacy.",
@@ -570,37 +570,62 @@
 	var prompt={
 		tokens: 4096,
 		role: "user",
-		system: "You are a middle-school English teacher responding to a student's statement",
+		system: "You are classifying a middle-school teacher's [remark] by their primary instructional intent.",
 		remark: "",
 		model: model,
 		temperature: 0,
 		objective: "Classify the teacher’s [remark] into the single option from [options] whose intent best matches the teacher’s PRIMARY purpose in this utterance.",
-		instructions :`Follow these steps exactly:
+		instructions :`FOLLOW THESE STEPS EXACTLY:
 						1. Normalize the [remark]: trim whitespace, collapse repeated spaces, remove filler tokens at sentence starts (e.g., "um", "okay") without changing meaning.
 						2. Read the entire remark and identify the single PRIMARY intent (what the teacher is trying to accomplish now). Ignore polite fillers or side comments.
 						3. Compare the remark to the option definitions in [options] and select the best match.
 						4. If two options are equally plausible, use the disambiguation_hierarchy to pick the higher-priority option.
 						6. If you cannot map the remark to any option, output "0".
-				<key_distinguishers>
+			KEY_DISTINGUISHERS:
 				• Explicit correction + WHY or strategy → 400  
 				• Explains meaning, probes reasoning, "What in the text…" → 200  
 				• Reflection/transfer/metacognition → 500  
 				• Praise tied to specific strategy/evidence → 300  
 				• Generic/short praise, vague check, restating → 100
-			</key_distinguishers>
-			<disambiguation_hierarchy>
+			DISAMBIGUATION_HIERARCY:
 				1. 400 — Cultivate
 				2. 200 — Clarify
 				3. 500 — Extend
 				4. 300 — Reflect
 				5. 100 — Low Impact
-			</disambiguation_hierarchy>
-			<default>
-				If teacher say's thank you → 100.
-			</default>
-			
-			`,
-		options: options100s3
+			DEFAULT:
+				If teacher say's thank you → 100.`,
+		options: `OPTIONS:
+
+			100 - LOW IMPACT
+			Description: Vague, generic responses that don't advance learning
+			Key patterns: Simple acknowledgments, restating student's word, compliments 
+			Examples: "Nice job" | "That's correct" | "You're close" | "Does that make sense?" | "Re-read that" | Student, you said: ____
+
+			200 - CLARIFY  
+			Description: Asks for more information about what the student said. Remark MUST be a question.
+			Key patterns: Questions about how/why student thinks something, requests for elaboration
+			Examples: "Why do you say that?" | "How did you get that?" | "What in the text makes you think that?"
+
+			300 - REFLECT
+			Description: Restates/summarizes student thinking (often starts with "You...")
+			Key patterns: Acknowledging student reasoning, recognizing their connections/background knowledge
+			Examples: "You identified evidence of..." | "You're making a connection..." | "You're bringing in background knowledge"
+
+			400 - CULTIVATE
+			Description: Provides information or gives direction to actively guide toward learning goals with strategies, corrections + explanations, or resource use
+			Key patterns: Explicit redirection with reasoning, prompts to use tools, strategic next steps
+			Examples: "Let's look for more evidence" | "Use the vocab cards" | "Let's focus on what we know"
+
+			420 - REDIRECT
+			Description: Teacher explicitly tell the student WHY their understanding of the text is incorrect and provide a strategy or clear action step to improve understanding.
+			Key patterns: Identifies and explains an incorrect response or misunderstanding
+			Examples: "Your information is incorrect" | "You have a misunderstanding" | "The question is asking for something else"
+
+			500 - EXTEND
+			Description: Promotes metacognition - thinking about thinking, summarizing, or transferring learning
+			Key patterns: Asks about thinking process changes, application to new contexts, summarizing
+			Examples: "How did your answer change?" | "Summarize in one sentence" | "What would you do next time?"
+			`
 		};
 
-	
