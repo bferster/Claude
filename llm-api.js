@@ -126,7 +126,7 @@ class ClaudeAPI {
 		    try {
    				const response = await openAI.chat.completions.create({
       			model: d.model,
-	//     		reasoning_effort:"low",
+	     		reasoning_effort:"medium",
 				max_completion_tokens: d.tokens,
   				messages: [
 						{ role: "system", content: d.system },

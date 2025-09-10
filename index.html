@@ -27,9 +27,10 @@
 <body>
 	<img style="position:absolute; top:-8vh;left:-10.5%; width:8%" src="img/agilelogo.png">
 	<select id="model" class="is">
-		<option>gpt-5-mini</option>		
 		<option>gpt-5-nano</option>		
+		<option>gpt-5-mini</option>		
 		<option>gpt-5</option>	
+		<option>gpt-4.1</option>		
 		<option>claude-sonnet-4-20250514</option>
 		<option>claude-opus-4-20250514</option>
 		<option>claude-3-haiku-20240307</option> 
@@ -77,6 +78,7 @@
 	<br><br>
 	<div id="output" style="width:70%;padding:8px;border:1px solid;overflow-y:scroll;max-height:60vh"> Response will show up here...</div>
 	<br><div id="promptSpan"></div>
+	<br><div id="results"></div>
 
 
 <script>
@@ -130,28 +132,36 @@
 
 	$("#auto").on("click",(e)=>	{ 
 		inAuto=!inAuto;
-		skipper=$("#skip").val()-0;
 		numRemarks=CountRemarks($("#intent").val()-0,$("#endintent").val()-0);
+		skipper=$("#skip").val()-0;
 		if (!inAuto) {
-			let tens=0;hundreds=0,time=0,num=0;
-			let i,o;
-			let fields=["target","intent","time","m100s","m10s","remark"];
+			let time=0;
+			let i,j,o;
+			let ns=[0,0,0,0,0,0];
+			let rs=[0,0,0,0,0,0];
+			let tn=0,tr=0
 			for (i=0;i<responses.length;++i) {
 				o=responses[i];
-				o.m100s=(Math.floor(o.intent/100) == Math.floor(o.target/100)) ? 1 : 0;	
-				o.m10s=(Math.floor(o.intent) == Math.floor(o.target)) ? 1 : 0;
-				hundreds+=o.m100s;	
-				tens+=o.m10s;	
-				time+=o.time;	
-				let end=$("#endintent").val()-0;
-				if (o.target < end)	++num;
+				j=Math.floor(o.target/100)-1;
+				if ((j < 0) || (j > 4)) break;
+				ns[j]++;
+				if (Math.floor(o.intent/100) == Math.floor(o.target/100)) rs[j]++;
+				time+=o.time;
 				}
-			let str=Papa.unparse(remarks,{ header:true, skipEmptyLines:true, columns:fields  });			
-			SaveTextAsFile(prompt.model+".csv", str);
-			++num;
-			trace("100s="+(Math.round(hundreds/numRemarks*100))+"%",hundreds,numRemarks);
-//			trace("10s="+(Math.round(tens/numRemarks*100))+"%",tens); 
-			trace("time="+Math.round(time/numRemarks));
+				
+			let s="<b>Results:</b><br>";
+			for (i=0;i<5;++i) {
+				tn+=ns[i];
+				tr+=rs[i];
+				s+=(i+1)*100+" = "+(Math.round(rs[i]/ns[i]*100))+"% -- "+rs[i]+"/"+ns[i]+"<br>";
+				}
+			s+="ALL = "+(Math.round(tr/tn*100))+"% -- "+tr+"/"+tn+"<br>";
+			s+="Time is "+time/tn;
+			$("#results").html(s);
+
+//			let fields=["target","intent","time","m100s","m10s","remark"];
+//			let str=Papa.unparse(remarks,{ header:true, skipEmptyLines:true, columns:fields  });			
+//			SaveTextAsFile(prompt.model+".csv", str);
 			}
 		else{
 			responses=[];
@@ -191,7 +201,7 @@
 		d.role=prompt.role;			d.tokens=prompt.tokens; 		d.instructions=prompt.instructions; 
 		d.model=prompt.model; 		d.system=prompt.system;			d.temperature=prompt.temperature;
 		d.remark=`REMARK: ${remark}\n`;
-		d.content=`OBJECTIVE:${prompt.objective}>\nINSTRUCTIONS:${prompt.instructions}\n`;
+		d.content=`OBJECTIVE: ${prompt.objective}>\nINSTRUCTIONS: ${prompt.instructions}\n`;
 		d.content+=prompt.options;
 		if ($('#why').prop('checked')) 
 			d.content+=`OUTPUT FORMAT: Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
@@ -234,7 +244,7 @@
 				setTimeout(()=>{
 					$("#addremark").trigger("click");
 					$("#send").trigger("click");
-					},2500);
+					},500);
 			}
 		});
 

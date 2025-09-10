@@ -579,22 +579,18 @@
 						1. Normalize the [remark]: trim whitespace, collapse repeated spaces, remove filler tokens at sentence starts (e.g., "um", "okay") without changing meaning.
 						2. Read the entire remark and identify the single PRIMARY intent (what the teacher is trying to accomplish now). Ignore polite fillers or side comments.
 						3. Compare the remark to the option definitions in [options] and select the best match.
-						4. If two options are equally plausible, use the disambiguation_hierarchy to pick the higher-priority option.
+						4.If two options fit, apply DISAMBIGUATION PRIORITY.
 						6. If you cannot map the remark to any option, output "0".
-			KEY_DISTINGUISHERS:
-				• Explicit correction + WHY or strategy → 400  
-				• Explains meaning, probes reasoning, "What in the text…" → 200  
-				• Reflection/transfer/metacognition → 500  
-				• Praise tied to specific strategy/evidence → 300  
-				• Generic/short praise, vague check, restating → 100
-			DISAMBIGUATION_HIERARCY:
-				1. 400 — Cultivate
-				2. 200 — Clarify
-				3. 500 — Extend
-				4. 300 — Reflect
-				5. 100 — Low Impact
-			DEFAULT:
-				If teacher say's thank you → 100.`,
+					KEY_DISTINGUISHERS:
+						• Explicit correction + WHY or strategy → 400  
+						• Explains meaning, probes reasoning, "What in the text…" → 200  
+						• Reflection/transfer/metacognition → 500  
+						• Praise tied to specific strategy/evidence → 300  
+						• Generic/short praise, vague check, restating → 100
+					DISAMBIGUATION PRIORITY
+						420 → 400 → 200 → 500 → 300 → 100
+					DEFAULT:
+						If teacher says thank you → 100.`,
 		options: `OPTIONS:
 
 			100 - LOW IMPACT
@@ -604,7 +600,7 @@
 
 			200 - CLARIFY  
 			Description: Asks for more information about what the student said. Remark MUST be a question.
-			Key patterns: Questions about how/why student thinks something, requests for elaboration
+			Key patterns: Questions about how/why a student thinks something, requests for elaboration
 			Examples: "Why do you say that?" | "How did you get that?" | "What in the text makes you think that?"
 
 			300 - REFLECT
