@@ -143,7 +143,7 @@ class ClaudeAPI {
 				const response = await claude.createMessage({
 					model: d.model,
 					max_tokens: d.tokens,
-					temperature: 0.5,
+					temperature: 0,
 					messages: [{ 
 						role: d.role, 
 						content: [	{ type: "text", text: d.content, cache_control: {type: "ephemeral" } },

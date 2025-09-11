@@ -579,7 +579,7 @@
 						1. Normalize the [remark]: trim whitespace, collapse repeated spaces, remove filler tokens at sentence starts (e.g., "um", "okay") without changing meaning.
 						2. Read the entire remark and identify the single PRIMARY intent (what the teacher is trying to accomplish now). Ignore polite fillers or side comments.
 						3. Compare the remark to the option definitions in [options] and select the best match.
-						4.If two options fit, apply DISAMBIGUATION PRIORITY.
+						4. If two options fit, apply DISAMBIGUATION PRIORITY.
 						6. If you cannot map the remark to any option, output "0".
 					KEY_DISTINGUISHERS:
 						• Explicit correction + WHY or strategy → 400  
@@ -594,9 +594,9 @@
 		options: `OPTIONS:
 
 			100 - LOW IMPACT
-			Description: Vague, generic responses that don't advance learning
-			Key patterns: Simple acknowledgments, restating student's word, compliments 
-			Examples: "Nice job" | "That's correct" | "You're close" | "Does that make sense?" | "Re-read that" | Student, you said: ____
+            Description: Compliments, corrections, or instructions that don't explain why or what to do differently
+            Key patterns: Simple compliments, simple corrections, directs to read again, general classroom behavior
+            Examples: "Nice job" | "That's correct" | "That's not correct" | "Re-read that" |"Read that again."
 
 			200 - CLARIFY  
 			Description: Asks for more information about what the student said. Remark MUST be a question.
@@ -614,8 +614,8 @@
 			Examples: "Let's look for more evidence" | "Use the vocab cards" | "Let's focus on what we know"
 
 			420 - REDIRECT
-			Description: Teacher explicitly tell the student WHY their understanding of the text is incorrect and provide a strategy or clear action step to improve understanding.
-			Key patterns: Identifies and explains an incorrect response or misunderstanding
+			Description: Teacher explicitly tell the student WHY their understanding of the text is incorrect + provide a strategy or clear action step to improve understanding.
+			Key patterns: Identifies + explains an incorrect response or misunderstanding
 			Examples: "Your information is incorrect" | "You have a misunderstanding" | "The question is asking for something else"
 
 			500 - EXTEND

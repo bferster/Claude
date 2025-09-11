@@ -27,8 +27,8 @@
 <body>
 	<img style="position:absolute; top:-8vh;left:-10.5%; width:8%" src="img/agilelogo.png">
 	<select id="model" class="is">
-		<option>gpt-5-nano</option>		
 		<option>gpt-5-mini</option>		
+		<option>gpt-5-nano</option>		
 		<option>gpt-5</option>	
 		<option>gpt-4.1</option>		
 		<option>claude-sonnet-4-20250514</option>
@@ -159,9 +159,8 @@
 			s+="Time is "+time/tn;
 			$("#results").html(s);
 
-//			let fields=["target","intent","time","m100s","m10s","remark"];
-//			let str=Papa.unparse(remarks,{ header:true, skipEmptyLines:true, columns:fields  });			
-//			SaveTextAsFile(prompt.model+".csv", str);
+	//	let str=Papa.unparse(responses,{ header:true, skipEmptyLines:true, columns:["target","intent","remark"]  });			
+	//	SaveTextAsFile("testresults.csv", str);
 			}
 		else{
 			responses=[];
@@ -244,7 +243,7 @@
 				setTimeout(()=>{
 					$("#addremark").trigger("click");
 					$("#send").trigger("click");
-					},500);
+					},2500);
 			}
 		});
 
