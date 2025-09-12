@@ -596,15 +596,15 @@
 			100 - LOW IMPACT
             Description: Compliments, corrections, or instructions that don't explain why or what to do differently
             Key patterns: Simple compliments, simple corrections, directs to read again, general classroom behavior
-            Examples: "Nice job" | "That's correct" | "That's not correct" | "Re-read that" |"Read that again."
+            Examples: "Nice job" | "That's correct" | "That's not correct" | "Re-read that" | "Read that again" | "Can you repeat that"
 
 			200 - CLARIFY  
 			Description: Asks for more information about what the student said. Remark MUST be a question.
 			Key patterns: Questions about how/why a student thinks something, requests for elaboration
-			Examples: "Why do you say that?" | "How did you get that?" | "What in the text makes you think that?"
+			Examples: "Why do you say that" | "How did you get that" | "What in the text makes you think that" 
 
 			300 - REFLECT
-			Description: Restates/summarizes student thinking (often starts with "You...")
+			Description: Restates/summarizes student thinking (often starts with "You")
 			Key patterns: Acknowledging student reasoning, recognizing their connections/background knowledge
 			Examples: "You identified evidence of..." | "You're making a connection..." | "You're bringing in background knowledge"
 
@@ -621,7 +621,7 @@
 			500 - EXTEND
 			Description: Promotes metacognition - thinking about thinking, summarizing, or transferring learning
 			Key patterns: Asks about thinking process changes, application to new contexts, summarizing
-			Examples: "How did your answer change?" | "Summarize in one sentence" | "What would you do next time?"
+			Examples: "How did your answer change" | "Summarize in one sentence" | "What would you do next time"
 			`
 		};
 

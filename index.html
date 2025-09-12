@@ -30,7 +30,7 @@
 		<option>gpt-5-mini</option>		
 		<option>gpt-5-nano</option>		
 		<option>gpt-5</option>	
-		<option>gpt-4.1</option>		
+		<option>gpt-4</option>		
 		<option>claude-sonnet-4-20250514</option>
 		<option>claude-opus-4-20250514</option>
 		<option>claude-3-haiku-20240307</option> 
@@ -156,7 +156,13 @@
 				s+=(i+1)*100+" = "+(Math.round(rs[i]/ns[i]*100))+"% -- "+rs[i]+"/"+ns[i]+"<br>";
 				}
 			s+="ALL = "+(Math.round(tr/tn*100))+"% -- "+tr+"/"+tn+"<br>";
-			s+="Time is "+time/tn;
+			s+="Time is "+time/tn+"<br>";
+			for (i=0;i<responses.length;++i) {
+					o=responses[i];
+				if (Math.floor(o.intent/100) != Math.floor(o.target/100))
+					if (o.remark.match(/REMARK: (.*)/i))
+						s+="<br>"+o.target+" -> "+o.remark.match(/REMARK: (.*)/i)[1]+" -> "+o.intent;
+				}
 			$("#results").html(s);
 
 	//	let str=Papa.unparse(responses,{ header:true, skipEmptyLines:true, columns:["target","intent","remark"]  });			
@@ -197,17 +203,16 @@
 		let i,j,k;
 		responses.push({time:0, target:curIntent, intent:0, remark:curQuestion });		
 		LoadingIcon(true);
+		remark=remark.replace(/\?/g,"");
 		d.role=prompt.role;			d.tokens=prompt.tokens; 		d.instructions=prompt.instructions; 
 		d.model=prompt.model; 		d.system=prompt.system;			d.temperature=prompt.temperature;
 		d.remark=`REMARK: ${remark}\n`;
 		d.content=`OBJECTIVE: ${prompt.objective}>\nINSTRUCTIONS: ${prompt.instructions}\n`;
 		d.content+=prompt.options;
 		if ($('#why').prop('checked')) 
-			d.content+=`OUTPUT FORMAT: Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
+			d.content+=`\nOUTPUT FORMAT: Output the numeric intent ID (e.g., 100) or "0" in bold face font. Then thoroughly explain why that option was chosen. Give the probabilies for for each option being the correct one list of percentages.`;
 		else	
-			d.content+=`OUTPUT FORMAT: Output only the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.}`;
-
-
+			d.content+=`\nOUTPUT FORMAT: Output only the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.`;		
 
 
 
@@ -243,7 +248,7 @@
 				setTimeout(()=>{
 					$("#addremark").trigger("click");
 					$("#send").trigger("click");
-					},2500);
+					},1500);
 			}
 		});
 
