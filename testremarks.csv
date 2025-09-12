@@ -17,7 +17,9 @@ intent,remark
 200,What are you missing from your answer
 200,What do you know about how this person used literacy in her work
 200,What facts do you know about ____
+200,What else can you tell me about: ____
 200,What do you remember about ___ from class
+200,What details here show Sojourner Truth using literacy skills
 300,You identified how she used literacy
 300,You identified evidence of the literacy tool of symbolism
 300,You are making a connection between two ideas
@@ -29,10 +31,9 @@ intent,remark
 300,You checked for errors and looked for evidence
 300,You just identified the main idea by this point
 300,You just showed us how to use context clues
-400,What details here show Sojourner Truth using literacy skills
 400,Let's look again to find more evidence
-400,What else can you tell me about: ____
 400,Let's focus on what we know
+400,"So, next time you have to answer a question that requires information from the text, please remember to make sure you understand the question first before you start trying to find an answer"
 420,Let's move in a different direction
 420,"You are interpreting the question to mean one thing, but the question is only asking about this other idea."
 420,Your answer wasn't quite there because we needed to focus more on ___ than ___
@@ -45,7 +46,6 @@ intent,remark
 430,Let's circle the details that she used to communicate ideas about her life
 430,A good strategy to help you find the best answer for comprehension questions is to look for the subject and the actions in the text that have the same meaning as those in the question
 430,Let's try that by looking for synonyms for an action word.
-500,"So, next time you have to answer a question that requires information from the text, please remember to make sure you understand the question first before you start trying to find an answer"
 500,Can you remember a moment when your thinking was intellectually careful
 500,How could you apply this strategy next time you encounter a tricky question like this
 500,"Next time you have a similar question, what would you do first"
