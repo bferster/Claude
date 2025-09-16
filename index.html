@@ -214,11 +214,10 @@
 		else	
 			d.content+=`\nOUTPUT FORMAT: Output only the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.`;		
 
+		let LLMserver=window.location.host.match(/localhost/i) ? "http://localhost" : "//stagetools.com";
 
-
-
-		fetch('http://localhost:3000/api', {
-			method: "POST", 
+		fetch(LLMserver+":3000/llmapi", {
+			method: "POST",
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(d)
 			})

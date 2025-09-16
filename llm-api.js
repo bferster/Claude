@@ -2,8 +2,19 @@ const https = require('https');
 const OpenAI = require("openai");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// CLAUDE API
+// CLAUDE API   node 
 /////////////////////////////////////////////////////////////////////////////////////////////////
+	
+/* 
+cd /htdocs/llmapi
+forever stop llm-api.js 
+forever start llm.api.js
+node lm.api.js
+open port 3000
+*/
+
+
+
 
 class ClaudeAPI {
 	constructor(apiKey, options = {}) {
@@ -100,12 +111,12 @@ class ClaudeAPI {
 	app.use(cors());
 	app.use(express.json());												// Use JSON
 	
-	app.post('/api', (req, res) => {									// HANDLE POST
+	app.post('/llmapi', (req, res) => {									// HANDLE POST
  		Chat(req.body)													
 	.then((r)=>{res.send({R:r})})
 		});
 
-	app.get('/api', (req, res) => {										// HANDLE GET
+	app.get('/llmapi', (req, res) => {										// HANDLE GET
  		res.send({a:'GET request received successfully!'});
 		});
 
