@@ -198,7 +198,7 @@
 
 
 
-	function sendJsonData(remark)
+	async function sendJsonData(remark)
 	{
 		let i,j,k;
 		responses.push({time:0, target:curIntent, intent:0, remark:curQuestion });		
@@ -214,9 +214,10 @@
 		else	
 			d.content+=`\nOUTPUT FORMAT: Output only the numeric intent ID (e.g., 100) or "0". Do NOT output punctuation, extra words, or explanations.`;		
 
-		let LLMserver=window.location.host.match(/localhost/i) ? "http://localhost" : "//stagetools.com";
+		let url=window.location.host.match(/localhost/i) ? "http://localhost" : "https://www.stagetools.com";
 
-		fetch(LLMserver+":3000/llmapi", {
+
+		fetch(url+":8001/llmapi", {
 			method: "POST",
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(d)
@@ -252,6 +253,9 @@
 		});
 
 	}
+
+
+
 function CountRemarks(start=0, end=600)
 {
 

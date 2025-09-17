@@ -1,16 +1,20 @@
 const https = require('https');
 const OpenAI = require("openai");
+const fs = require("fs");
+const os = require("os");
+const local=os.hostname().match(/^bill|desktop/i);						
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // CLAUDE API   node 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
 /* 
-cd /htdocs/llmapi
+cd htdocs/llmapi
+node llm-api.js
 forever stop llm-api.js 
 forever start llm.api.js
-node lm.api.js
-open port 3000
+node llmapi.js
+open port 8001
 */
 
 
@@ -107,11 +111,11 @@ class ClaudeAPI {
 	const express = require('express');										// Use express module
 	const cors = require('cors');											// Enable CORS
 	const app=express();													// Alloc expreess
-	const port = 3000;														// Set port
+	const port = 8001;														// Set port
 	app.use(cors());
 	app.use(express.json());												// Use JSON
 	
-	app.post('/llmapi', (req, res) => {									// HANDLE POST
+	app.post('/llmapi', (req, res) => {										// HANDLE POST
  		Chat(req.body)													
 	.then((r)=>{res.send({R:r})})
 		});
@@ -120,9 +124,17 @@ class ClaudeAPI {
  		res.send({a:'GET request received successfully!'});
 		});
 
-	app.listen(port, () => {
-    	console.log(`Server listening at ${port}`);
-		});
+	
+	if (local) app.listen(port, () => {	console.log(`HTTP Server listening at ${port}`);	});
+	else{
+		const options={
+			key: fs.readFileSync("/opt/bitnami/apache/conf/www.stagetools.com.key"),
+			cert: fs.readFileSync("/opt/bitnami/apache/conf/www.stagetools.com.crt"),
+			};
+		https.createServer(options, app).listen(port, () => {
+			console.log(`HTTPS Server listening at port ${port}`);
+			});
+		}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // CHAT API ACCESS
@@ -132,7 +144,6 @@ class ClaudeAPI {
 	const openAI = new OpenAI({ apiKey: process.env.OPENAI_API_KEY} );
 
 	async function Chat(d) {
-
 		if (d.model.match(/gpt/i)) {
 		    try {
    				const response = await openAI.chat.completions.create({
